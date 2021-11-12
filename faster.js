@@ -150,7 +150,7 @@ let FasterJs = {
         e.remove();
       });
       document.querySelector('[data-faster-app]').innerHTML = 'Error: open console tool to review it.';
-      console.log("Error: no (Faster.config.basePathName) path value passed within history mode.");
+      console.log("Error: no (Faster.config.basePathName) path value passed.");
       return;
     }
 
