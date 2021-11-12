@@ -89,7 +89,7 @@ let FasterJs = {
             }
           });
 
-          if (!methodToRun) { errorToThrow = errorToThrow ?? 'routeMapNotFound'; }
+          if (!methodToRun) { errorToThrow = errorToThrow ? errorToThrow : 'routeMapNotFound'; }
         }
         else {
           methodToRun = null;
