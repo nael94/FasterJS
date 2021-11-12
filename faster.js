@@ -102,7 +102,7 @@ let FasterJs = {
       }
 
       if (errorToThrow) { this.throwError(errorToThrow); }
-      else { methodToRun(FaterCore = e); }
+      else { methodToRun(FasterCore = e); }
     },
   },
   events: {
