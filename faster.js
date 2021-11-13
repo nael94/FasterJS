@@ -155,7 +155,7 @@ let FasterJs = {
     }
 
     // before beginning, let's hide all direct children items of [data-faster-app]
-    document.querySelectorAll('[data-faster-app] > *').forEach(e => {
+    document.querySelectorAll('[data-faster-app] > [data-faster-component]').forEach(e => {
       e.style.display = 'none';
     });
     
