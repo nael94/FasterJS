@@ -59,6 +59,8 @@ let FasterJs = {
       return;
     },
     init() {
+      document.querySelector('html').style.scrollBehavior = 'smooth';
+
       let methodToRun = null, errorToThrow = null, e = {
         view: FasterJs.view,
         goTo: this.goTo,
