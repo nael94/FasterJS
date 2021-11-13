@@ -182,7 +182,9 @@ let FasterJs = {
 
       FasterLinks.forEach(link => {
         let href = window.location.origin + (this.config.basePathName + link.getAttribute('href')).replace('//', '/');
-        link.setAttribute('href', href);
+        if (link.tagName.toLowerCase() === 'a') {
+          link.setAttribute('href', href);
+        }
         link.addEventListener('click', event => {
           event.preventDefault();
           this.router.goTo(link.getAttribute('data-faster-link'));
@@ -202,7 +204,15 @@ let FasterJs = {
       }
 
       FasterLinks.forEach(link => {
-        link.setAttribute('href', ('#!/' + link.getAttribute('href')).replace('//', '/'));
+        if (link.tagName.toLowerCase() === 'a') {
+          link.setAttribute('href', ('#!/' + link.getAttribute('href')).replace('//', '/'));
+        }
+        else {
+          link.addEventListener('click', event => {
+            // link.router.goTo(link.getAttribute('data-faster-link'));
+            this.router.goTo(link.getAttribute('data-faster-link'));
+          });
+        }
       });
 
       // hash mode requires onhashchange window event
