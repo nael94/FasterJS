@@ -66,6 +66,12 @@ let FasterJs = {
         route: history.state ? history.state : {},
       };
 
+      // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
+      document.querySelectorAll('[data-faster-app] > [data-faster-component],[data-faster-app] [data-faster-fallback]')
+        .forEach(e => {
+        e.style.display = 'none';
+      });
+
       if (Object.keys(this.routesMap).length > 0) {
         if (FasterJs.config.mode === 'hash') {
           // hash mode is activated
@@ -104,7 +110,22 @@ let FasterJs = {
       }
 
       if (errorToThrow) { this.throwError(errorToThrow); }
-      else { methodToRun(FasterCore = e); }
+      else {
+        let param = () => {
+          let e = {};
+          e.config = {};
+          e.config.mode = FasterJs.config.mode;
+          e.config.el = document.querySelector('[data-faster-app]');
+          e.router = {};
+          e.router.baseRoute = FasterJs.router.baseRoute;
+          e.router.currentRoute = FasterJs.router.currentRoute();
+          return e;
+        };
+
+        if (FasterJs.events.beforeRouteEnter) { FasterJs.events.beforeRouteEnter(param()); }
+        methodToRun(FasterCore = e);
+        if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(param()); }
+      }
     },
   },
   events: {
@@ -155,11 +176,6 @@ let FasterJs = {
       console.log("Error: no (Faster.config.basePathName) path value passed.");
       return;
     }
-
-    // before beginning, let's hide all direct children items of [data-faster-app]
-    document.querySelectorAll('[data-faster-app] > [data-faster-component]').forEach(e => {
-      e.style.display = 'none';
-    });
     
     let FasterLinks = document.querySelectorAll('[data-faster-link]'),
     param = () => {
@@ -217,9 +233,7 @@ let FasterJs = {
 
       // hash mode requires onhashchange window event
       window.onhashchange = () => {
-        if (this.events.beforeRouteEnter) { this.events.beforeRouteEnter(param()); }
         this.router.init();
-        if (this.events.routeEntered) { this.events.routeEntered(param()); }
       };
     }
 
