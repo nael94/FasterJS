@@ -61,6 +61,8 @@ let FasterJs = {
     init() {
       let methodToRun = null, errorToThrow = null, e = {
         view: FasterJs.view,
+        goTo: this.goTo,
+        currentRoute: this.currentRoute(),
         route: history.state ? history.state : {},
       };
 
