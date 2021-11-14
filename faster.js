@@ -16,6 +16,7 @@ let FasterJs = {
         //
       },
     },
+    events: {},
     fallbacks: {
       noRoutesMap: null,
       noRoutesMethods: null,
@@ -37,6 +38,9 @@ let FasterJs = {
     },
     registerMethods(methods) {
       return Object.assign(this.routesMethods, methods);
+    },
+    registerEvents(events) {
+      return Object.assign(this.events, events);
     },
     goTo(route = '', params = {}) {
       if (FasterJs.config.mode === 'history') {
@@ -61,7 +65,7 @@ let FasterJs = {
     init() {
       document.querySelector('html').style.scrollBehavior = 'smooth';
 
-      let methodToRun = null, errorToThrow = null, e = {
+      let methodToRun = null, errorToThrow = null, eventToRun = null, e = {
         view: FasterJs.view,
         goTo: this.goTo,
         currentRoute: this.currentRoute(),
@@ -126,6 +130,10 @@ let FasterJs = {
 
         if (FasterJs.events.beforeRouteEnter) { FasterJs.events.beforeRouteEnter(param()); }
         methodToRun(FasterCore = e);
+        if (Object.keys(this.events).length > 0) {
+          eventToRun = this.events[this.currentRoute()];
+          if (eventToRun) { eventToRun(e); }
+        }
         if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(param()); }
       }
     },
