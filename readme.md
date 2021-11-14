@@ -1,4 +1,4 @@
-﻿# FasterJS
+# FasterJS
 A lightweight vanilla JavaScript front-end framework that lets you build a simple website with predefined routes.
 
 ### Benefits:
@@ -114,7 +114,9 @@ Assuming we have this URL requested:
 
 In fact, ___FasterJS___ will check up if the `/` route is registered before. If it is, it'll fire the `index` method. So, `index` method is triggered. It'll be like this way:
 
+
 ![First image](https://iili.io/5XSC7a.png)
+
 Here, we have to override the `index` method using `registerMethods` method in `router` config. It'll be like this way:
 ```
 [app.js]
@@ -132,6 +134,7 @@ Here, we have to override the `index` method using `registerMethods` method in `
 > We're going to talk about these parameter later. Don't worry about that.
 
 Now, the result would be like this way:
+
 
 ![Second image](https://iili.io/5XU0cF.png)
 
@@ -202,7 +205,10 @@ In another hand, if the user reaches a URL with a route that is not registered y
  4. routeMethodNotFound
 
 Fallback system in ___FasterJS___ will not suspend your website or stop running it, but it'll print an error in Console Panel in the browser. It'll be like this way:
+
+
 ![Third Image](https://iili.io/5X4MAu.png)
+
 Guess what? Instead of waiting for the fallback error to be printed in the Console Panel, you can show up a specific page that's fully customized by you and no error will be printed in Console Panel! Here is how to do this:
 
  1. Create an element inside `[data-faster-app]` with this attribute `[data-faster-fallback]`. Recently, I've suggested to you that it would be a `<section>` element.
@@ -217,7 +223,10 @@ It'll be like this way:
     </div>
   </body>
 ```
+
+
 ![Fourth Image](https://iili.io/5X6uUP.png)
+
 Pretty cool! :-)
 
 ___
@@ -270,7 +279,10 @@ ___FasterJS___ has 5 types of global events:
 ___Fallbacks___ events are triggered, when needed, before ___loaded___ event, following this order above.
 
 To make this idea clear, let's have a look at this diagram below:
+
+
 ![FasterJS events diagram](https://iili.io/5jD8Ol.jpg)
+
 ___
 
 ### Views
