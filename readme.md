@@ -13,11 +13,19 @@ ___
 ### Installation
 First of all, you need to download the minified version of framework file ___faster.min.js___ then include it before closing the body tag (you can use the normal version ___faster.js___ if you want to see all code under the hood).
 
+Then, you need to set `<base />` tag in `<head>`. This is important for website routeing system stability.
+
 I suggest to create a separate js file to setup ___FasterJS___ rather than coding it in `<script>` tag below the script file. It'll be like this way:
 ```
 [index.html]
-  <script src="./faster.min.js"></script>
-  <script src="./app.js"></script>     <- Your JS setup file
+  <head>
+    <base href="https://yourwebsite.com/your/folder/if/exists/" /> <!-- The slash in the end is necessary -->
+  </head>
+  <body>
+    <!-- your website content here ... -->
+    <script src="./faster.min.js"></script>
+    <script src="./app.js"></script>     <- Your JS setup file
+  </body>
 ```
 Basically, ___FasterJS___ works with a whole root container element having this attribute `[data-faster-app]`. It's a very good idea to use the HTML5 semantic element `<main>` as a direct child of `<body>`, but using `<div>` still a good choice anyway. It'll be like this way:
 ```
