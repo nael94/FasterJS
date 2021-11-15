@@ -19,7 +19,7 @@ I suggest to create a separate js file to setup ___FasterJS___ rather than codin
   <script src="./faster.min.js"></script>
   <script src="./app.js"></script>     <- Your JS setup file
 ```
-Basically, ___FasterJS___ works with a whole root container element having this attribute `[data-faster-app]`. It's a very good idea to use a direct-child `<div>` element of `<body>` with this attribute like:
+Basically, ___FasterJS___ works with a whole root container element having this attribute `[data-faster-app]`. It's a very good idea to use the HTML5 semantic element `<main>` as a direct child of `<body>`, but using `<div>` still a good choice anyway. It'll be like this way:
 ```
 [index.html]
   <body>
