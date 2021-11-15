@@ -5,7 +5,7 @@ A lightweight vanilla JavaScript front-end framework that lets you build a simpl
 - Lightweight size < 10kb.
 - Both hash-based and history-mode-based routing system are available.
 - Designed to work with simple kinds of basic, static and small webpages that does not really need an enormous frameworks to do just some staff.
-- A framework lunched today and is being developed everyday, so a lot of new features are on the way. It's now just a fresh start.
+- A framework launched today and is being developed everyday, so a lot of new features are on the way. It's now just a fresh start.
 - Easy to use (Try it and you'll see!).
 
 ___
