@@ -75,7 +75,8 @@ let FasterJs = {
       // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
       document.querySelectorAll('[data-faster-app] > [data-faster-component],[data-faster-app] [data-faster-fallback]')
         .forEach(e => {
-        e.style.display = 'none';
+          if (!FasterJs.config.componentsTransitions) { e.style.display = 'none'; }
+          else { e.style.opacity = 0; e.style.visibility = 'hidden'; }
       });
 
       if (Object.keys(this.routesMap).length > 0) {
@@ -156,10 +157,12 @@ let FasterJs = {
         component.getAttribute('data-faster-fallback-type') === selector
       ) {
         if (!FasterJs.config.componentsTransitions) { component.style.display = 'block'; }
+        else { component.style.opacity = 1; component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
       }
       else {
         if (!FasterJs.config.componentsTransitions) { component.style.display = 'none'; }
+        else { component.style.opacity = 0; component.style.visibility = 'hidden'; }
         component.setAttribute('data-faster-component-activity', '');
       }
     });
