@@ -267,7 +267,7 @@ ___FasterJS___ uses any kind of elements tags for navigation, depending on built
 
 ___
 
-### Route Event
+### Router Events
 You can assign a specific event when a route is requested. For this, and assuming that you'd registered your `routeMap` and its `routeMethod`, all what you have to do is to register an event using `registerEvents` method in `router` config. It'll be like this way:
 ```
 [app.js]
