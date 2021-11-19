@@ -70,6 +70,16 @@ let FasterJs = {
         goTo: this.goTo,
         currentRoute: this.currentRoute(),
         route: history.state ? history.state : {},
+      },
+      param = () => {
+        let e = {};
+        e.config = {};
+        e.config.mode = FasterJs.config.mode;
+        e.config.el = document.querySelector('[data-faster-app]');
+        e.router = {};
+        e.router.baseRoute = FasterJs.router.baseRoute;
+        e.router.currentRoute = FasterJs.router.currentRoute();
+        return e;
       };
 
       // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
@@ -116,27 +126,18 @@ let FasterJs = {
         errorToThrow = 'noRoutesMap';
       }
 
+      if (FasterJs.events.beforeRouteEnter) { FasterJs.events.beforeRouteEnter(param()); }
+
       if (errorToThrow) { this.throwError(errorToThrow); }
       else {
-        let param = () => {
-          let e = {};
-          e.config = {};
-          e.config.mode = FasterJs.config.mode;
-          e.config.el = document.querySelector('[data-faster-app]');
-          e.router = {};
-          e.router.baseRoute = FasterJs.router.baseRoute;
-          e.router.currentRoute = FasterJs.router.currentRoute();
-          return e;
-        };
-
-        if (FasterJs.events.beforeRouteEnter) { FasterJs.events.beforeRouteEnter(param()); }
         methodToRun(FasterCore = e);
         if (Object.keys(this.events).length > 0) {
           eventToRun = this.events[this.currentRoute()];
           if (eventToRun) { eventToRun(e); }
         }
-        if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(param()); }
       }
+
+      if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(param()); }
     },
   },
   events: {
