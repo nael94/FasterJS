@@ -10,6 +10,18 @@ A lightweight vanilla JavaScript front-end framework that lets you build a simpl
 
 ___
 
+### Upcoming Features
+This section will be updated continuously.
+
+Currently, our plan is to deliver these features:
+- Dynamic routes and parameters in `router` config.
+- Named routes in `router` config.
+
+___
+
+### Requirements
+___FasterJs___ is developed within vanilla JavaScript, so there is no dependency required. All what you need is a good knowledge in HTML5 and JavaScript. For CSS, it depends on your website design. 
+
 ### Installation
 First of all, you need to download the minified version of framework file ___faster.min.js___ then include it before closing the body tag (you can use the normal version ___faster.js___ if you want to see all code under the hood).
 
