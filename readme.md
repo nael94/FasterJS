@@ -15,7 +15,6 @@ This section will be updated continuously.
 
 Currently, our plan is to deliver these features:
 - Dynamic routes and parameters in `router` config.
-- Named routes in `router` config.
 
 ___
 
