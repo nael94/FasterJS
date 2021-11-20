@@ -297,7 +297,7 @@ As `router` events, ___FasterJS___ has 5 types of global events:
 - ___routeEntered___: Similar to the previous event but this event is fired after calling an existing route map and its method.
 - ___loaded___: At the end, this event is fired after all events and fallbacks.
 
-___Fallbacks___ events are triggered, when needed, before ___loaded___ event, following this order above.
+___Fallbacks___ events are triggered, _when needed_, before ___loaded___ event, following this order above.
 
 To make this idea clear, let's have a look at this diagram below:
 
@@ -308,7 +308,7 @@ Here's an example of FasterJS events timeline:
 ```
 [app.js]
   FasterJs.events.beforeInit = FasterCore => {
-    // beforeInit() event will fire when the framework is loaded into the browser and before initializing anything of its methods
+    // beforeInit() event will fire when the framework is loaded into the browser and before initializing anything of its methods.
   };
   FasterJs.events.init = FasterCore => {
     // init() event will fire after `beforeInit` event but before navigating to the requested URL.
@@ -371,12 +371,14 @@ To avoid this, you have to disable `componentsTransitions` property in `config` 
 
 This will stop using `display` CSS property and still managing `[data-faster-component]` elements using `[data-faster-component-activity]` property effected by `FasterJs.view()` method.
 
-In this case, you're free to handle any animation, transform or transition that you want. For example: prepare a CSS class and manage your effects by adding and removing it using JS. It's up to you.
+In this case, ___FasterJS___ will use `visibility: visible|hidden;` instead of `display: block|none;` and you'll be free to draw any animation, transform or transition that you want. For example: prepare a CSS class and manage your effects by adding and removing it using JS using `opacity: 0|1;`. It's up to you.
 
 ___
 
 ### Loading Layer
-___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest you to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property  `config` key. It'll be like this way:
+___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property `config` key. This element doesn't have any CSS styles, so you're free how to design its 
+
+It'll be like this way:
 ```
 [index.html]
   <body>
