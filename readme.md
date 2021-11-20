@@ -149,7 +149,7 @@ Here, we have to override the `index` method using `registerMethods` method in `
 > The formula of `registerMethods()` is an object list with key-value pairs. The key is the name of the method, and value is the `function` to trigger.
 
 > The parameter `FasterCore` represents an object contains:
-> { ___view___: FasterJs.view(selector), ___route___: { ... }, ___currentRoute___: '...' }
+> { ___view___: FasterJs.view(selector), ___goTo___: FasterJs.goTo(route), ___route___: { ... }, ___currentRoute___: '...' }
 > 
 > We're going to talk about these parameter later. Don't worry about that.
 
