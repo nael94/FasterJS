@@ -190,7 +190,15 @@ And so on ...
 
 In 'hash' routing mode only, you can define `baseRoute` option in `router` config, the default value is `/`. To understand its concept, let's have a look at this scenario:
 
-When you navigate to the website and the URL does not have `#!` delimiter, ___FasterJS___ will redirect to `baseRoute` route. If the requested URL has `#!`, then `baseRoute` will not effect.
+When you navigate to the website and the URL does not have `#!` delimiter, ___FasterJS___ will redirect to `baseRoute` route. If the requested URL has `#!`, then `baseRoute` will not effect. It'll be like this way:\
+
+```
+[app.js]
+  FasterJs.router.baseRoute = '/';
+```
+
+This idea helps us to redirect the user to a different route either than the index route, like: special offer route page, limited time offer route page, ...
+
 
 Programmatically, if you need to know the current route, you can use `currentRoute` property in `FasterCore` parameter. It'll be like this way:
 ```
