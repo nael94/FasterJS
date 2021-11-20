@@ -293,7 +293,7 @@ ___
 As `router` events, ___FasterJS___ has 5 types of global events:
 - ___beforeInit___: This event is fired when the framework is loaded into the browser and before initializing anything of its methods.
 - ___init___: This event is fired after ___beforeInit___ event but before navigating to the requested URL.
-- ___beforeRouteEnter___: This event is fired before calling the requested route and ___MUST___ be registered with its method.
+- ___beforeRouteEnter___: This event is fired before starting `router` core and matching routes.
 - ___routeEntered___: Similar to the previous event but this event is fired after calling an existing route map and its method.
 - ___loaded___: At the end, this event is fired after all events and fallbacks.
 
@@ -308,19 +308,19 @@ Here's an example of FasterJS events timeline:
 ```
 [app.js]
   FasterJs.events.beforeInit = FasterCore => {
-    // beforeInit() event will fire before starting FasterJs
+    // beforeInit() event will fire when the framework is loaded into the browser and before initializing anything of its methods
   };
   FasterJs.events.init = FasterCore => {
-    // init() event will fire after starting FasterJs and before loading Router core.
+    // init() event will fire after `beforeInit` event but before navigating to the requested URL.
   };
   FasterJs.events.beforeRouteEnter = FasterCore => {
     // beforeRouteEnter() event will fire before starting Router core and matching routes.
   };
   FasterJs.events.routeEntered = FasterCore => {
-    // routeEntered() event will fire after matching the route and fired its method.
+    // routeEntered() event will fire after calling an existing route map and its method.
   };
   FasterJs.events.loaded = FasterCore => {
-    // loaded() event will fire when everything is loaded and done.
+    // loaded() event will fire after all events and fallbacks.
   };
 ```
 
