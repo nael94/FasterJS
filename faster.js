@@ -55,7 +55,7 @@ let FasterJs = {
     },
     throwError(error) {
       if (this.fallbacks[error]) { this.fallbacks[error](); }
-      else if (document.querySelectorAll('[data-faster-fallback]').length > 0) {
+      else if (document.querySelectorAll(`[data-faster-fallback][data-faster-fallback-type=${error}]`).length > 0) {
         // if [data-faster-fallback] is exist, call the specified related element.
         FasterJs.view(error);
       }
