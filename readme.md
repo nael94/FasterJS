@@ -188,8 +188,8 @@ And so on ...
 >   });
 > ````
 
-In 'hash' routing mode only, you can define `baseRoute` option in `router` config, the default value is `/`.
-To understand its concept, let's have a look at this scenario:
+In 'hash' routing mode only, you can define `baseRoute` option in `router` config, the default value is `/`. To understand its concept, let's have a look at this scenario:
+
 When you navigate to the website and the URL does not have `#!` delimiter, ___FasterJS___ will redirect to `baseRoute` route. If the requested URL has `#!`, then `baseRoute` will not effect.
 
 Programmatically, if you need to know the current route, you can use `currentRoute` property in `FasterCore` parameter. It'll be like this way:
