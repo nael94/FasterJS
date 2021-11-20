@@ -170,7 +170,7 @@ Let's have a look at `registerMaps()` method in `router` config with this exampl
 
 > All registered routes MUST be preceded by (/) slash.
 
-With this new two routes that is defined above, let's register their methods. It'll be like this way:
+With this new routes that are defined above, let's register their methods. It'll be like this way:
 ```
 [app.js]
   FasterJs.router.registerMethods({
