@@ -217,7 +217,8 @@ Also, if you want to navigate to another route, you can use `goTo` method in `Fa
 ```
 This will update the URL and navigate to the desired route path, exactly like when the user manually he does when normal surfing your website.
 
-In another hand, if the user reaches a URL with a route that is not registered yet, ___FasterJS___ will trigger a fallback error. ___FasterJS___ has 4 fallbacks:
+In another hand, if the user reaches a URL with a route that is not registered yet, ___FasterJS___ will trigger a fallback error.
+___FasterJS___ has 4 fallbacks:
 
  1. noRoutesMap
  2. noRoutesMethods
@@ -260,7 +261,7 @@ ___FasterJS___ uses any kind of elements tags for navigation, depending on built
     <div data-faster-app>
       <a href="/contact" data-faster-link="/contact">This is anchor tag targeting to /contact route</a>
       <button data-faster-link="/contact">Also this button targets to /contact route</button>
-      <div data-faster-link="/contact">Also with this css-stylized div targets to /contact route</div>
+      <div data-faster-link="/contact">Also with this css-styled div targets to /contact route</div>
     </div>
   </body>
 ```
@@ -289,19 +290,39 @@ You can assign a specific event when a route is requested. For this, and assumin
 ___
 
 ### Global Events
-___FasterJS___ has 5 types of global events:
+As `router` events, ___FasterJS___ has 5 types of global events:
 - ___beforeInit___: This event is fired when the framework is loaded into the browser and before initializing anything of its methods.
 - ___init___: This event is fired after ___beforeInit___ event but before navigating to the requested URL.
-- ___beforeRouteEnter___: This event is fired before calling the requested route and ___MUST___ be registered with its method.
+- ___beforeRouteEnter___: This event is fired before starting `router` core and matching routes.
 - ___routeEntered___: Similar to the previous event but this event is fired after calling an existing route map and its method.
 - ___loaded___: At the end, this event is fired after all events and fallbacks.
 
-___Fallbacks___ events are triggered, when needed, before ___loaded___ event, following this order above.
+___Fallbacks___ events are triggered, _when needed_, before ___loaded___ event, following this order above.
 
 To make this idea clear, let's have a look at this diagram below:
 
 
-![FasterJS events diagram](https://iili.io/5jD8Ol.jpg)
+![FasterJS events diagram](https://iili.io/58KEL7.png)
+
+Here's an example of FasterJS events timeline:
+```
+[app.js]
+  FasterJs.events.beforeInit = FasterCore => {
+    // beforeInit() event will fire when the framework is loaded into the browser and before initializing anything of its methods.
+  };
+  FasterJs.events.init = FasterCore => {
+    // init() event will fire after `beforeInit` event but before navigating to the requested URL.
+  };
+  FasterJs.events.beforeRouteEnter = FasterCore => {
+    // beforeRouteEnter() event will fire before starting Router core and matching routes.
+  };
+  FasterJs.events.routeEntered = FasterCore => {
+    // routeEntered() event will fire after calling an existing route map and its method.
+  };
+  FasterJs.events.loaded = FasterCore => {
+    // loaded() event will fire after all events and fallbacks.
+  };
+```
 
 ___
 
@@ -350,12 +371,14 @@ To avoid this, you have to disable `componentsTransitions` property in `config` 
 
 This will stop using `display` CSS property and still managing `[data-faster-component]` elements using `[data-faster-component-activity]` property effected by `FasterJs.view()` method.
 
-In this case, you're free to handle any animation, transform or transition that you want. For example: prepare a CSS class and manage your effects by adding and removing it using JS. It's up to you.
+In this case, ___FasterJS___ will use `visibility: visible|hidden;` instead of `display: block|none;` and you'll be free to draw any animation, transform or transition that you want. For example: prepare a CSS class and manage your effects by adding and removing it using JS using `opacity: 0|1;`. It's up to you.
 
 ___
 
 ### Loading Layer
-___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest you to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property  `config` key. It'll be like this way:
+___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property `config` key. This element doesn't have any CSS styles, so you're free how to design its 
+
+It'll be like this way:
 ```
 [index.html]
   <body>
