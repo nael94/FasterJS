@@ -89,6 +89,13 @@ let FasterJs = {
           else { e.style.visibility = 'hidden'; }
       });
 
+      let loadingLayer = document.querySelector('[data-faster-app] [data-faster-loading]');
+      if (loadingLayer) {
+        if (!FasterJs.config.loadingLayer) {
+          loadingLayer.style.display = 'none';
+        }
+      }
+
       if (Object.keys(this.routesMap).length > 0) {
         if (FasterJs.config.mode === 'hash') {
           // hash mode is activated
@@ -260,7 +267,7 @@ let FasterJs = {
       if (this.events.loaded) { this.events.loaded(param()); }
       if (this.config.loadingLayer) {
         setTimeout(() => {
-          document.querySelector('[data-faster-loading]').style.visibility = 'hidden';
+          document.querySelector('[data-faster-loading]').classList.add('loaded');
         }, 2500);
       }
     };
