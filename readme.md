@@ -217,7 +217,8 @@ Also, if you want to navigate to another route, you can use `goTo` method in `Fa
 ```
 This will update the URL and navigate to the desired route path, exactly like when the user manually he does when normal surfing your website.
 
-In another hand, if the user reaches a URL with a route that is not registered yet, ___FasterJS___ will trigger a fallback error. ___FasterJS___ has 4 fallbacks:
+In another hand, if the user reaches a URL with a route that is not registered yet, ___FasterJS___ will trigger a fallback error.
+___FasterJS___ has 4 fallbacks:
 
  1. noRoutesMap
  2. noRoutesMethods
@@ -260,7 +261,7 @@ ___FasterJS___ uses any kind of elements tags for navigation, depending on built
     <div data-faster-app>
       <a href="/contact" data-faster-link="/contact">This is anchor tag targeting to /contact route</a>
       <button data-faster-link="/contact">Also this button targets to /contact route</button>
-      <div data-faster-link="/contact">Also with this css-stylized div targets to /contact route</div>
+      <div data-faster-link="/contact">Also with this css-styled div targets to /contact route</div>
     </div>
   </body>
 ```
@@ -289,7 +290,7 @@ You can assign a specific event when a route is requested. For this, and assumin
 ___
 
 ### Global Events
-___FasterJS___ has 5 types of global events:
+As `router` events, ___FasterJS___ has 5 types of global events:
 - ___beforeInit___: This event is fired when the framework is loaded into the browser and before initializing anything of its methods.
 - ___init___: This event is fired after ___beforeInit___ event but before navigating to the requested URL.
 - ___beforeRouteEnter___: This event is fired before calling the requested route and ___MUST___ be registered with its method.
@@ -301,7 +302,27 @@ ___Fallbacks___ events are triggered, when needed, before ___loaded___ event, fo
 To make this idea clear, let's have a look at this diagram below:
 
 
-![FasterJS events diagram](https://iili.io/5jD8Ol.jpg)
+![FasterJS events diagram](https://iili.io/58KEL7.png)
+
+Here's an example of FasterJS events timeline:
+```
+[app.js]
+  FasterJs.events.beforeInit = FasterCore => {
+    // beforeInit() event will fire before starting FasterJs
+  };
+  FasterJs.events.init = FasterCore => {
+    // init() event will fire after starting FasterJs and before loading Router core.
+  };
+  FasterJs.events.beforeRouteEnter = FasterCore => {
+    // beforeRouteEnter() event will fire before starting Router core and matching routes.
+  };
+  FasterJs.events.routeEntered = FasterCore => {
+    // routeEntered() event will fire after matching the route and fired its method.
+  };
+  FasterJs.events.loaded = FasterCore => {
+    // loaded() event will fire when everything is loaded and done.
+  };
+```
 
 ___
 
