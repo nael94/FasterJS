@@ -86,7 +86,7 @@ let FasterJs = {
       document.querySelectorAll('[data-faster-app] > [data-faster-component],[data-faster-app] [data-faster-fallback]')
         .forEach(e => {
           if (!FasterJs.config.componentsTransitions) { e.style.display = 'none'; }
-          else { e.style.opacity = 0; e.style.visibility = 'hidden'; }
+          else { e.style.visibility = 'hidden'; }
       });
 
       if (Object.keys(this.routesMap).length > 0) {
@@ -158,12 +158,12 @@ let FasterJs = {
         component.getAttribute('data-faster-fallback-type') === selector
       ) {
         if (!FasterJs.config.componentsTransitions) { component.style.display = 'block'; }
-        else { component.style.opacity = 1; component.style.visibility = 'visible'; }
+        else {  component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
       }
       else {
         if (!FasterJs.config.componentsTransitions) { component.style.display = 'none'; }
-        else { component.style.opacity = 0; component.style.visibility = 'hidden'; }
+        else { component.style.visibility = 'hidden'; }
         component.setAttribute('data-faster-component-activity', '');
       }
     });
@@ -260,7 +260,7 @@ let FasterJs = {
       if (this.events.loaded) { this.events.loaded(param()); }
       if (this.config.loadingLayer) {
         setTimeout(() => {
-          document.querySelector('[data-faster-loading]').style.display = 'none';
+          document.querySelector('[data-faster-loading]').style.visibility = 'hidden';
         }, 2500);
       }
     };
