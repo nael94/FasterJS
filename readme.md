@@ -372,8 +372,7 @@ Under the hood, ___FasterJS___ uses CSS `display: block|none;` for toggling elem
 To avoid this, you have to disable `componentsTransitions` property in `config` object. It'll be like this way:
 ```
 [app.js]
-  FasterJs.config.componentsTransitions = false;
-  // default is true
+  FasterJs.config.componentsTransitions = true; // default is false
 ```
 
 This will stop using `display` CSS property and still managing `[data-faster-component]` elements using `[data-faster-component-activity]` property effected by `FasterJs.view()` method.
