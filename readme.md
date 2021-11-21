@@ -389,7 +389,7 @@ It'll be like this way:
 [index.html]
   <body>
     <div data-faster-app>
-      <section data-faster-loading>This is loading element ...</section>
+      <section data-faster-loading>Loading ...</section>
     </div>
   </body>
 ```
