@@ -382,14 +382,14 @@ In this case, ___FasterJS___ will use `visibility: visible|hidden;` instead of `
 ___
 
 ### Loading Layer
-___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property `config` key. This element doesn't have any CSS styles, so you're free how to design its 
+___FasterJS___ also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest to use `<section>`) having this attribute `[data-faster-loading]` and set `loadingLayer` to true into property `config` key. This element doesn't have any CSS predefined styles, so you're free how to design it as you like.
 
 It'll be like this way:
 ```
 [index.html]
   <body>
     <div data-faster-app>
-      <section data-faster-loading>This is loading sample ...</section>
+      <section data-faster-loading>This is loading element ...</section>
     </div>
   </body>
 ```
@@ -403,6 +403,7 @@ ___
 
 ### Initialization
 And now, after this trip together in preparation and processing ___FasterJS___, it's time to initialize it using `init()` method.
+
 `init()` method ___MUST___ be in the end of script app file to ensure that all preceded codes are setup as well. It'll be like this:
 ```
 [app.js]
