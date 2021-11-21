@@ -368,7 +368,7 @@ Now, to handle views programmatically, we use `view(id)` method. It'll be like t
   });
 ```
 
-Under the hood, ___FasterJS___ uses CSS `display: block||none;` for toggling elements. The `display` property prevents some of transitions, transforms, animations and any other effects that you need to do.
+Under the hood, ___FasterJS___ uses CSS `display: block|none;` for toggling elements. The `display` property prevents some of transitions, transforms, animations and any other effects that you need to do.
 To avoid this, you have to disable `componentsTransitions` property in `config` object. It'll be like this way:
 ```
 [app.js]
