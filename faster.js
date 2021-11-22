@@ -47,6 +47,7 @@ let FasterJs = {
         route = route === '' ? '/' : route;
         let passedRoute = window.location.origin + (FasterJs.config.basePathName + route).replace('//', '/');
         history.pushState({route: route, params: params}, '', passedRoute);
+        FasterJs.router.init();
       }
       else {
         route = `#!/${route}`.replace('//', '/');
@@ -225,7 +226,6 @@ let FasterJs = {
         link.addEventListener('click', event => {
           event.preventDefault();
           this.router.goTo(link.getAttribute('data-faster-link'));
-          this.router.init();
         });
       });
 
@@ -268,7 +268,7 @@ let FasterJs = {
       if (this.config.loadingLayer) {
         setTimeout(() => {
           document.querySelector('[data-faster-loading]').classList.add('loaded');
-        }, 2500);
+        }, 1);
       }
     };
   },
