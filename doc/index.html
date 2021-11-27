@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="http://localhost/my-projects/faster-js/doc/" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+  <link rel="manifest" href="icons/site.webmanifest" />
+
+  <title>FasterJS</title>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu|Charmonman|Source Code Pro' rel='stylesheet' />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <header>
+    <button><i class="fa fa-bars" aria-hidden="true"></i></button>
+    <aside>
+      <nav>
+        <a data-faster-link="/"                  href="/"                 >Home</a>
+        <a data-faster-link="/benefits"          href="/benefits"         >Benefits</a>
+        <a data-faster-link="/upcoming-features" href="/upcoming-features">Upcoming Features</a>
+        <a data-faster-link="/installation"      href="/installation"     >Requirements and Installation</a>
+        <a data-faster-link="/basic-setup"       href="/basic-setup"      >Basic Setup</a>
+        <a data-faster-link="/getting_started"   href="/getting_started"  >Getting Started</a>
+        <a data-faster-link="/navigation"        href="/navigation"       >Navigation</a>
+        <a data-faster-link="/router-events"     href="/router-events"    >Router Events</a>
+        <a data-faster-link="/global-events"     href="/global-events"    >Global Events</a>
+        <a data-faster-link="/views"             href="/views"            >Views</a>
+        <a data-faster-link="/loading-layer"     href="/loading-layer"    >Loading Layer</a>
+        <a data-faster-link="/initialization"    href="/initialization"   >Initialization</a>
+        <a data-faster-link="/whats-next"        href="/whats-next"       >What's Next?</a>
+      </nav>
+    </aside>
+  </header>
+  <div class="aside-backlayer"></div>
+  
+  <div class="main" data-faster-app>
+    <section data-faster-component data-faster-component-id="index">
+      <div class="vertical-align">
+        <div class="container">
+          <!-- <img src="./icons/logo-2.png" alt="Faster Logo" class="brand-hero" /> -->
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
+              <h1 class="header-brand brand-hero unselectable">FasterJS</h1>
+              <p class="">A lightweight vanilla JavaScript front-end framework that lets you build a simple website with predefined routes.</p>
+              <nav>
+                <a href="https://gitlab.com/nael_d/faster-js/-/archive/main/faster-js-main.zip" class="nav-download">
+                  <i class="fas fa-download"></i>
+                  <span>Download FasterJS</span>
+                </a>
+                <a href="https://gitlab.com/nael_d/faster-js" class="nav-gitlab-repo-link">
+                  <i class="fab fa-gitlab"></i>
+                  <span>FasterJS repo in GitLab</span>
+                </a>
+              </nav>
+              <hr />
+              <h6 class="copyright">This webiste is built with FasterJS framework, and the pagination transitions are pure CSS3 styles.</h6>
+              <h6 class="copyright">&copy; 2021<span id="currentYear"></span> FasterJS is developed by <a target="_blank" href="http://naeldahman.me">Mohammad Nael Dahman</a></h6>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7">
+              <div class="code-window">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <h6 class="mt-3">Want to go? Type [next] or [prev] in each virtual terminal then press Enter</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="benefits">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <h2>Benefits of using FasterJS</h2>
+              <hr />
+              <ul>
+                <li>Lightweight size ~ 10kb for unminified version.</li>
+                <li>Both hash-based and history-mode-based routing system are available.</li>
+                <li>Designed to work with simple kinds of basic, static and small webpages that does not really need an enormous frameworks to do just some staff.</li>
+                <li>A framework launched today and is being developed everyday, so a lot of new features are on the way. It's now just a fresh start.</li>
+                <li>This website is already built with FasterJS. Imagine!</li>
+                <li>Easy to use (Try it and you'll see!).</li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="upcoming-features">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 col-xxl-5">
+              <h2>Upcoming Features</h2>
+              <small>This section will be updated continuously.</small>
+              <hr />
+              <p>Currently, our plan is to deliver these features:</p>
+              <ul>
+                <li>Dynamic routes and parameters in router config.</li>
+              </ul>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7">
+              <div class="code-window" style="max-width: 600px;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="installation">
+      <div class="pt-4-">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+              <div class="requirements mb-4">
+                <h2>Requirements</h2>
+                <hr />
+                <p>FasterJS is developed within vanilla JavaScript, so there is no dependency required. All what you need is a good knowledge in HTML5 and JavaScript. For CSS, it depends on your website design.</p>
+              </div>
+              <div class="installation">
+                <h2>Installation</h2>
+                <hr />
+                <article>
+                  <p>First of all, you need to download the framework. If you are planning to use FasterJS as is (you don't care about its codes under the hood), then I suggest to use the minified version <b>faster.min.js</b> then include it before closing the body tag.</p>
+                  <p>Then, you need to set <b>&lt;base /&gt;</b> tag in <b>&lt;head&gt;</b>. This is important for website routeing system stability.</p>
+                  <p>I suggest to create a separate js file to setup FasterJS rather than coding it in &lt;script&gt; tag below the script file.:</p>
+                  <p>Basically, FasterJS works with a one-only whole root container element having this attribute [data-faster-app]. It's a very good idea to use the HTML5 semantic element <b>&lt;main&gt;</b> as a direct child of <b>&lt;body&gt;</b>, but using <b>&lt;div&gt;</b> still a good choice anyway.</p>
+                  <p>It'll be like this way:</p>
+                </article>
+                <div class="code-window" style="max-width: 768px;">
+                  <div class="code-window-top-bar">
+                    <div class="code-window-top-bar-circle"></div>
+                    <div class="code-window-top-bar-circle"></div>
+                    <div class="code-window-top-bar-circle"></div>
+                  </div>
+                  <div class="code-window-board">
+                    <code class="code-window-board-sample"></code>
+                    <code contenteditable></code>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="basic-setup">
+      <div class="pt-4-">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+              <h2>Basic Setup</h2>
+              <hr />
+              <article>
+                <p>FasterJS divides your pages into components, each one should have the attribute [data-faster-component] and [data-faster-component-id].</p>
+                <p>It's a good idea to create them using <b>&lt;section&gt;</b> HTML5 semantic tag.
+                  The root container [data-faster-app] <b>MUST</b> have the [data-faster-component] elements as a direct children of the root. Nesting components is <b><u>NOT ALLOWED</u></b>.</p>
+                  <p>You can surround your [data-faster-app] with elements that you want to keep them available whatever you browse. FasterJS will handle [data-faster-app] ignoring anything inside <b>&lt;body&gt;</b> else.</p>
+                  <p>In fact, you can still use FasterJS without creating [data-faster-component] elements. FasterJS only handles those elements for pagination-routing system. As long the root [data-faster-app] element is found, FasterJS will function as well.</p>
+                  <p>It'll be like this way:</p>
+              </article>
+              <div class="code-window" style="max-width: 767px;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="getting-started">
+      <div class="pt-4-">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
+              <div class="code1">
+                <h2>Getting Started</h2>
+                <hr />
+                <article>
+                  <p>When you include FasterJS framework, the variable <i>FasterJs</i> will be ready for you. After preparing the basics, you could run your website using <b>init()</b> method. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code1"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                </article>
+              </div>
+              <div class="code2 mt-4">
+                <article>
+                  <p>Although it's good to go, but we missed some basic setup to move on.</p>
+                  <p>Firstly, the routing system is, <i>by default</i>, hash mode. If you want to change it to history mode, it'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code2"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <blockquote>Good to know: ordering codes is not an important matter, but it's desirable to do for a clean code.<br />Although it, FasterJs.init(); should be in last!</blockquote>
+                </article>
+              </div>
+              <div class="code3 mt-4">
+                <article>
+                  <p>Then, we have to set <b>basePathName</b>, it refers to an absolute path source of your website. If it's in root, set it to <b>/</b> (<i>this is default value, anyway</i>). It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code3"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <blockquote>Good to know: ordering codes is not an important matter, but it's desirable to do for a clean code.<br />Although it, <b>FasterJs.init();</b> should be in last after all.</blockquote>
+                  <blockquote>Slashes around the path above are <b>IMPORTANT TO ASSIGN</b>!</blockquote>
+                </article>
+              </div>
+              <div class="code4 mt-4">
+                <article>
+                  <p>Then, we have to register two things: <b>routeMap</b> and <b>routeMethod</b>. To understand its concept, let's have a look at this scenario:</p>
+                  <p>Assuming we have this URL requested: https://www.example.com/subfolder/</p>
+                  <blockquote>/subfolder/ is came from the <b>FasterJs.config.basePathName</b> that we'd set above. Remember that point.</blockquote>
+                  <blockquote>In <i>hash</i> routing mode, FasterJS will inject <u>#!</u> delimiter before routes. This is related with <b>baseRoute</b> option. We're going to talk about it in a while.<br /><br />
+                    Nothing will be injected in <i>history</i> mode.</blockquote>
+                  <blockquote>In FasterJS, the <b>/</b> route is predefined with <b>index()</b> blank method. You can override it.</blockquote>
+                  <p>Routinely, FasterJS will check up if the <b>/</b> route is registered. If it is, it'll fire the <b>index()</b> method. It'll be like this way:</p>
+                  <img src="https://user-content.gitlab-static.net/68b795eb1ba2fe11c1e02fbe014f8867c3bf53cb/68747470733a2f2f69696c692e696f2f3558534337612e706e67" alt="Code 4 image 1" />
+                  <p>Here, we have to override the <b>index</b> method using <b>registerMethods</b> method in <b>router</b> config. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code4-1"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <blockquote>The formula of <b>registerMethods()</b> is an object list with key-value pairs. The key is the path route preceded with <b>/</b>, and value is the function to trigger, having <b>FasterCore</b> parameter.</blockquote>
+                  <blockquote>The parameter <b>FasterCore</b> represents an object contains:<br />
+                    {<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;view: FasterJs.view(selector),<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;goTo: FasterJs.goTo(route),<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;route: { ... },<br />
+                      &nbsp;&nbsp;&nbsp;&nbsp;currentRoute: '...',<br />
+                    }<br /><br />
+                    We're going to talk about this parameter in a while. Don't worry about that.
+                  </blockquote>
+                  <p>Now, the result would be like this way:</p>
+                  <img src="https://user-content.gitlab-static.net/022dff7cdca98eff928d28739b3e578742eba9ce/68747470733a2f2f69696c692e696f2f3558553063462e706e67" alt="Code 4 image 2" />
+                  <hr class="separator" />
+                  <p>Let's have a look at <b>registerMaps()</b> method in <b>router</b> config with this example like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code4-2"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <blockquote>The formula of <b>registerMaps()</b> is an object list with key-value pairs. The key is the route path preceded with <b>/</b>, and value is the name of the function to trigger.</blockquote>
+                  <blockquote>All registered routes <b><u>MUST</u></b> be preceded by <b>/</b> slash.</blockquote>
+                  <p>With this new routes that are defined above, let's register their methods. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code4-3"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <p>And so on ...</p>
+                  <hr class="separator" />
+                  <blockquote>Good to know: If you have two or more routes and you want to trigger one method, you can handle this issue using pipeline character ( | ) like this way:</blockquote>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code4-4"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <hr class="separator" />
+                </article>
+              </div>
+              <div class="code5 mt-4">
+                <article>
+                  <p>In <i>hash</i> routing mode only, you can define <b>baseRoute</b> option in <b>router</b> config, the default value is <b>/</b>. To understand its concept, let's have a look at this scenario:</p>
+                  <p>When you navigate to the website and the URL does not have <u>#!</u>, delimiter, FasterJS will redirect to <b>baseRoute</b> route. If the requested URL has <u>#!</u>, then <b>baseRoute</b> will not effect. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code5-1"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <p>This idea helps us to redirect the user to a different route either than the index route, like: special offer route page, limited time offer route page, ...</p>
+                  <hr class="separator" />
+                  <p>Programmatically, if you need to know the current route, you can use <b>currentRoute</b> property in <b>FasterCore</b> parameter. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code5-2"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <p>Also, if you want to navigate to another route, you can use <b>goTo()</b> method in <b>FasterCore</b> parameter. It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 625px;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code5-3"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <p>This will update the URL and navigate to the desired route path, exactly like when the user manually he does when normal surfing your website.</p>
+                  <hr class="separator" />
+                </article>
+              </div>
+              <div class="code6 mt-4">
+                <article>
+                  <p>In another hand, if the user reaches a URL with a route that is not registered yet, FasterJS will trigger a fallback error.</p>
+                  <p>FasterJS has 4 fallbacks:</p>
+                  <ol>
+                    <li>noRoutesMap</li>
+                    <li>noRoutesMethods</li>
+                    <li>routeMapNotFound</li>
+                    <li>routeMethodNotFound</li>
+                  </ol>
+                  <p>Fallback system in FasterJS will not suspend your website or stop running it, but it'll print an error in Console Panel in the browser. It'll be like this way:</p>
+                  <img src="https://user-content.gitlab-static.net/dba03409d835a115801f69b73604e45206b429b2/68747470733a2f2f69696c692e696f2f3558344d41752e706e67" alt="Code 6 image 1" />
+                  <p>Guess what? Instead of waiting for the fallback error to be printed in the Console Panel, you can show up a specific page that's fully customized by you and no error will be printed in Console Panel! Here is how to do this:</p>
+                  <ol>
+                    <li>Create an element inside <b>[data-faster-app]</b> with this attribute <b>[data-faster-fallback]</b>. Recently, I've suggested to you that it would be a <b>&lt;section&gt;</b> element.</li>
+                    <li>Attach this extra attribute <b>[data-faster-fallback-type]</b> to the element with one of the fallbacks above.</li>
+                  </ol>
+                  <p>It'll be like this way:</p>
+                  <div class="code-window" style="max-width: 100%;">
+                    <div class="code-window-top-bar">
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                      <div class="code-window-top-bar-circle"></div>
+                    </div>
+                    <div class="code-window-board">
+                      <code class="code-window-board-sample" id="code6-1"></code>
+                      <code contenteditable></code>
+                    </div>
+                  </div>
+                  <img src="https://user-content.gitlab-static.net/5abe7554586676ac828d104b530f39cb922472a8/68747470733a2f2f69696c692e696f2f3558367555502e706e67" alt="Code 6 image 2" />
+                  <p>Pretty cool! :-)</p>
+                </article>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="navigation">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
+              <h2>Navigation</h2>
+              <hr />
+              <p>FasterJS uses any kind of elements tags for navigation, depending on built-in system for both hash-mode and history-mode using <b>[data-faster-link]</b> attribute with the target route value. It'll be like this way:</p>
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="router-events">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-6 col-xxl-6">
+              <h2>Router Events</h2>
+              <hr />
+              <p>You can assign a specific event when a route is requested.</p>
+              <p>For this, and assuming that you'd registered your <b>routeMap</b> and its <b>routeMethod</b>, all what you have to do is to register an event using <b>registerEvents()</b> method in <b>router</b> config. It'll be like this way:</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-6 col-xxl-6">
+              <div class="code-window" style="max-width: 600px;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="global-events">
+      <div class="vertical-align-">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
+              <h2>Global Events</h2>
+              <hr />
+              <p>As <b>router</b> events, FasterJS has 5 types of global events:</p>
+              <ol>
+                <li><b><i>beforeInit</i></b>: This event is fired when the framework is loaded into the browser and before initializing anything of its methods.</li>
+                <li><b><i>init</i></b>: This event is fired after <b><i>beforeInit</i></b> event but before navigating to the requested URL</li>
+                <li><b><i>beforeRouteEnter</i></b>: This event is fired before starting <b>router</b> core and matching routes.</li>
+                <li><b><i>routeEntered</i></b>: Similar to the previous event but this event is fired after calling an existing route map and its method.</li>
+                <li><b><i>loaded</i></b>: At the end, this event is fired after all events and fallbacks.</li>
+              </ol>
+              <p><b><i>Fallbacks</i></b> events are triggered, <i>when needed</i>, <u>before</u> <b><i>loaded</i></b> event, following this order above.</p>
+              <p>To make this idea clear, let's have a look at this diagram below:</p>
+              <img src="https://user-content.gitlab-static.net/c952c4cc2485d18732f329fefc950c080070c0f1/68747470733a2f2f69696c692e696f2f35384b454c372e706e67" alt="Global events diagram" />
+              <p>Here's an example of FasterJS events timeline:</p>
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="views">
+      <div class="vertical-align-">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
+              <h2>Views</h2>
+              <hr />
+              <p>Recently, we've talked about the basics of HTML tags to initialize FasterJS with routes and methods. All what we did before is setting up instructions without linking routes with related sections.</p>
+              <p>Now, to handle views programmatically, we use <b>view(id)</b> method. It'll be like this way:</p>
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample" id="views-1"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+              <p>Under the hood, FasterJS uses CSS <b><u>display: block|none;</u></b> for toggling elements. The display property prevents some of transitions, transforms, animations and any other effects that you need to do.</p>
+              <p>To avoid this, you have to disable <b>componentsTransitions</b> property in <b>config</b> object. It'll be like this way:</p>
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample" id="views-2"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+              <p>This will stop using <b>display</b> CSS property and still managing <b>[data-faster-component]</b> elements using <b>[data-faster-component-activity]</b> property effected by <b>FasterJs.view()</b> method.</p>
+              <p>In this case, FasterJS will use <b><u>visibility: visible|hidden;</u></b> instead of <b><u>display: block|none;</u></b> and you'll be free to draw any animation, transform or transition that you want.</p>
+              <p>For example: prepare a CSS class and manage your effects by adding and removing it using JS using <b><u>opacity: 0|1;</u></b>. It's up to you.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="loading-layer">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <h2>Loading Layer</h2>
+              <hr />
+              <p>FasterJS also provides custom loading layer for your website. All what you have to do is creating an element (again I suggest to use <b>&lt;section&gt;</b>) having this attribute <b>[data-faster-loading]</b> and set <b>loadingLayer</b> property in <b>config</b> key to true.</p>
+              <p>This element doesn't have any CSS predefined styles, so you're free how to design it as you like.</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="initialization">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <h2>Initialization</h2>
+              <hr />
+              <p>And now, after this trip together in preparation and processing FasterJS, it's time to initialize it using <b>init()</b> method.</p>
+              <p><b>init()</b> method <b><u>MUST</u></b> be in the end of script app file to ensure that all preceded codes are setup as well. It'll be like this:</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-component data-faster-component-id="whats-next">
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
+              <h2>What's Next?</h2>
+              <hr />
+              <p>FasterJS has just started and is in a continuous development process, dozens of new features are being tested and improved before officially released into a new versions here in this repo.</p>
+              <p>This readme file will be updated in each time that FasterJS has a new release.</p>
+              <p>So, if you're interested in FasterJS and you're waiting for the next, please give us a "Star" button in our GitLab repo and click the bell button and set the notifications setting to "Watch" to receive all updates by us.</p>
+              <p>Would you like to support us? All what you could do for us is mention FasterJS repo link in your website with &lt;3</p>
+              <p>Any questions? Feel free to reach me using my email: <a href="mailto:nael_d@hotmail.com">nael_d@hotmail.com</a></p>
+              <div class="code-window" style="max-width: 100%;">
+                <div class="code-window-top-bar">
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                  <div class="code-window-top-bar-circle"></div>
+                </div>
+                <div class="code-window-board">
+                  <code class="code-window-board-sample"></code>
+                  <code contenteditable></code>
+                </div>
+              </div>
+              <hr />
+              <p class="text-center">Reached the end of this documentation and still reading? You're amazing! :-D</p>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-1 col-xl-1 col-xxl-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-fallback data-faster-fallback-type='routeMapNotFound'>
+      <div class="vertical-align">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+              <img src="./pics/squid-game-staff-transparent.png" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+              <div class="text-center">
+                <h4>If you reach this page, You'll be eliminated!</h4>
+                <h6>Hahaha, just kidding 😜 You are safe.</h6>
+                <hr />
+                <h6>The route that you've requested is not found.</h6>
+                <h6>You can go back using back button in your device, or</h6>
+                <a href="/" data-faster-link="/">Go to home page</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-faster-loading>
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="./faster.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
