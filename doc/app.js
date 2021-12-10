@@ -108,7 +108,8 @@ el('.aside-backlayer').addEventListener('click', () => asideClose());
 
 // FasterJs setup
 
-FasterJs.config.basePathName = '/my-projects/faster-js/doc/';
+// FasterJs.config.basePathName = '/my-projects/faster-js/doc/';
+FasterJs.config.basePathName = '/faster-js/doc/';
 FasterJs.config.mode = 'hash';
 FasterJs.config.componentsTransitions = true;
 FasterJs.config.loadingLayer = true;
