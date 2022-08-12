@@ -2,7 +2,13 @@
 A lightweight vanilla JavaScript front-end framework that lets you build a simple website with predefined routes.
 
 ## Need to know:
-This is the documentation for FasterJS v1.0.* versions. Any committed changes, improves and fixes starting from v2 are located and explained in each release following its related tag. Any unmentioned features or properties will be the same as mentioned and explained in the main readme.md file unless it's been affected in that past release.
+This is the documentation for FasterJS v1.0.* versions.
+
+Any committed changes, improves and fixes starting from v2 are located and explained in each release following its related tag.
+
+Any unmentioned features or properties will be the same as mentioned and explained in the main readme.md file unless it's been affected in that past release.
+
+Have a look at [Tags](https://gitlab.com/nael_d/faster-js/-/tags) list page.
 
 ### Benefits:
 - Lightweight size < 10kb.
