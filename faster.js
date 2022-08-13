@@ -245,7 +245,7 @@ let FasterJs = {
         if (routeToExecute.after) { routeToExecute.after(FasterCore); }
       }
 
-      if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(param()); }
+      if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(FasterCore); }
     },
   },
   events: {
@@ -351,11 +351,6 @@ let FasterJs = {
       };
     }
     else {
-      // if (window.location.pathname !== FasterJs.config.basePathName) {
-      //   window.location.href = window.location.origin + FasterJs.config.basePathName;
-      //   return;
-      // }
-
       // hash mode requires onhashchange window event
       window.onhashchange = () => {
         this.router.init();
