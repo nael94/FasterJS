@@ -292,8 +292,6 @@ let FasterJs = {
 
     if (this.config.basePathName === null) {
       // no basePathName, this will lead to app failure.
-      // let allElems = document.querySelectorAll('[data-faster-app] > *');
-      // [...allElems].forEach(e => e.remove());
       document.querySelector('[data-faster-app]').innerHTML = 'Error: open console tool to review it.';
       console.log("Error: no (Faster.config.basePathName) path value passed.");
       return;
