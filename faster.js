@@ -156,11 +156,10 @@ let FasterJs = {
         };
 
       // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
-      document
-        .querySelectorAll('[data-faster-app] > [data-faster-component],[data-faster-app] [data-faster-fallback]')
-        .forEach(e => {
-          if (!FasterJs.config.componentsTransitions) { e.style.display = 'none'; }
-          else { e.style.visibility = 'hidden'; }
+      [...document.querySelectorAll('[data-faster-component], [data-faster-fallback], [data-faster-event]')]
+      .forEach(e => {
+        if (!FasterJs.config.componentsTransitions) { e.style.display = 'none'; }
+        else { e.style.visibility = 'hidden'; }
       });
 
       // hide loadingLayer if the config.loadingLayer is set to false
@@ -254,6 +253,8 @@ let FasterJs = {
     beforeRouteEnter: null,
     routeEntered: null,
     loaded: null,
+    ononline: null,
+    onoffline: null,
   },
   view(selector) {
     let
@@ -372,5 +373,18 @@ let FasterJs = {
         }, 1);
       }
     };
+
+    //
+
+    //handling ononline and onoffline events
+    window.addEventListener('online', e => {
+      if (this.events.ononline) { this.events.ononline(FasterCore, e); }
+      else { console.log(`router event key: ononline`); }
+    });
+
+    window.addEventListener('offline', e => {
+      if (this.events.onoffline) { this.events.onoffline(FasterCore, e); }
+      else { console.log(`router event key: onoffline`); }
+    });
   },
 };
