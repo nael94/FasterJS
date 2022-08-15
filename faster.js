@@ -53,21 +53,25 @@ let FasterJs = {
       routeNotRegistered: null,
     },
     currentRoute() {
-      if (FasterJs.config.mode === 'hash') {
+      let $this = FasterJs;
+      //
+      if ($this.config.mode === 'hash') {
         return window.location.hash.replace('#!', '');
       }
       else {
         let origin = window.location.origin,
-          currentRoute = window.location.href.replace(`${origin + FasterJs.config.basePathName}`, '');
+          currentRoute = window.location.href.replace(`${origin + $this.config.basePathName}`, '');
         return currentRoute !== '' ? ('/' + currentRoute.replace(/\/+$/, '')) : '/';
       }
     },
     goTo(routeName, params = {}) {
+      let $this = FasterJs;
+      //
       if (routeName.includes('/')) {
         // this is path to go
         // here, we treat routeName as route path
-        if (FasterJs.config.mode === 'history') {
-          let passedRoute = window.location.origin + (FasterJs.config.basePathName + routeName).replace('//', '/');
+        if ($this.config.mode === 'history') {
+          let passedRoute = window.location.origin + ($this.config.basePathName + routeName).replace('//', '/');
           history.pushState({route: routeName, params: params}, '', passedRoute);
         }
         else {
@@ -78,7 +82,7 @@ let FasterJs = {
       else {
         // this is route name to go
         let
-          routes = FasterJs.router.routes,
+          routes = $this.router.routes,
           routeToGo = null;
         //
         routes.forEach((route, i) => {
@@ -87,10 +91,10 @@ let FasterJs = {
           }
         });
         if (routeToGo) {
-          FasterJs.router.goTo(routeToGo);
+          $this.router.goTo(routeToGo);
         }
         else {
-          FasterJs.router.throwError('routeNameNotFound');
+          $this.router.throwError('routeNameNotFound');
         }
       }
     },
@@ -151,9 +155,11 @@ let FasterJs = {
       }
     },
     throwError(error) {
+      let $this = FasterJs;
+      //
       let FasterCore = {
         config: {
-          mode: FasterJs.config.mode,
+          mode: $this.config.mode,
           el: document.querySelector('[data-faster-app]'),
         },
         router: {
@@ -167,19 +173,20 @@ let FasterJs = {
       if (this.fallbacks[error]) { this.fallbacks[error](FasterCore); }
       else if (document.querySelector(`[data-faster-fallback][data-faster-fallback-type=${error}]`)) {
         // if [data-faster-fallback] is exist, call the specified related element.
-        FasterJs.view(error);
+        $this.view(error);
       }
       else { console.log(`router fallback error: ${error}`); }
       return;
     },
     init() {
       let
+        $this = FasterJs,
         loadingLayer = document.querySelector('[data-faster-app] > [data-faster-loading]'),
         errorToThrow = 'routeNotRegistered', // default error to throw
         routeToExecute = {},
         FasterCore = {
           config: {
-            mode: FasterJs.config.mode,
+            mode: $this.config.mode,
             el: document.querySelector('[data-faster-app]'),
           },
           route: {},
@@ -188,28 +195,28 @@ let FasterJs = {
             currentRoute: this.currentRoute(),
             goTo: this.goTo,
           },
-          view: FasterJs.view,
+          view: $this.view,
         };
 
       // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
       [...document.querySelectorAll('[data-faster-component], [data-faster-fallback], [data-faster-event]')]
       .forEach(e => {
-        if (!FasterJs.config.componentsTransitions) { e.style.display = 'none'; }
+        if (!$this.config.componentsTransitions) { e.style.display = 'none'; }
         else { e.style.visibility = 'hidden'; }
       });
 
       // hide loadingLayer if the config.loadingLayer is set to false
       if (loadingLayer) {
-        if (!FasterJs.config.loadingLayer) {
+        if (!$this.config.loadingLayer) {
           loadingLayer.style.display = 'none';
         }
       }
 
       // bootstrapping the router core
       // but before, let's fire the routeBeforeEnter global event, passing FasterCore object
-      if (FasterJs.events.beforeRouteEnter) { FasterJs.events.beforeRouteEnter(FasterCore); }
+      if ($this.events.beforeRouteEnter) { $this.events.beforeRouteEnter(FasterCore); }
 
-      if (FasterJs.config.mode === 'hash') {
+      if ($this.config.mode === 'hash') {
         if (['', '#', '#!'].includes(window.location.hash)) { // (/) blank hash
           this.goTo(this.baseRoute); // example.com => /#!/
           return; // to kill all next scripts
@@ -275,12 +282,12 @@ let FasterJs = {
       if (errorToThrow) { this.throwError(errorToThrow); }
       else {
         if (routeToExecute.before) { routeToExecute.before(FasterCore); }
-        if (routeToExecute.view) { FasterJs.view(routeToExecute.view); }
+        if (routeToExecute.view) { $this.view(routeToExecute.view); }
         if (routeToExecute.on) { routeToExecute.on(FasterCore); }
         if (routeToExecute.after) { routeToExecute.after(FasterCore); }
       }
 
-      if (FasterJs.events.routeEntered) { FasterJs.events.routeEntered(FasterCore); }
+      if ($this.events.routeEntered) { $this.events.routeEntered(FasterCore); }
     },
   },
   events: {
@@ -294,6 +301,7 @@ let FasterJs = {
   },
   view(selector) {
     let
+      $this = FasterJs,
       components = document.querySelectorAll(`[data-faster-app] [data-faster-component]`),
       fallbacks  = document.querySelectorAll(`[data-faster-app] [data-faster-fallback]`),
       all = [...components, ...fallbacks];
@@ -304,12 +312,12 @@ let FasterJs = {
         ||
         component.getAttribute('data-faster-fallback-type') === selector
       ) {
-        if (!FasterJs.config.componentsTransitions) { component.style.display = 'block'; }
+        if (!$this.config.componentsTransitions) { component.style.display = 'block'; }
         else { component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
       }
       else {
-        if (!FasterJs.config.componentsTransitions) { component.style.display = 'none'; }
+        if (!$this.config.componentsTransitions) { component.style.display = 'none'; }
         else { component.style.visibility = 'hidden'; }
         component.setAttribute('data-faster-component-activity', '');
       }
