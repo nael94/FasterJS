@@ -6,6 +6,42 @@ let FasterJs = {
     componentsTransitions: false,
     loadingLayer: false,
   },
+  tools: {
+    refreshLinks() {
+      let
+        $this = FasterJs,
+        fasterLinks = document.querySelectorAll('[data-faster-link]');
+      //
+      fasterLinks.forEach(link => {
+        // this to clone the link and recreate it without having any events
+        let l = link.cloneNode(true);
+        link.parentNode.replaceChild(l, link);
+        
+        //
+  
+        if ($this.config.mode === 'history') {
+          let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
+          if (l.tagName.toLowerCase() === 'a') {
+            l.setAttribute('href', href);
+          }
+          l.addEventListener('click', event => {
+            event.preventDefault();
+            $this.router.goTo(l.getAttribute('data-faster-link'));
+          });
+        }
+        else {
+          if (l.tagName.toLowerCase() === 'a') {
+            l.setAttribute('href', ('#!/' + l.getAttribute('href')).replace('//', '/'));
+          }
+        }
+        //
+        l.addEventListener('click', event => {
+          if ($this.config.mode === 'history') { event.preventDefault(); }
+          $this.router.goTo(l.getAttribute('data-faster-link'));
+        });
+      });
+    },
+  },
   router: {
     baseRoute: '/',
     routes: [
@@ -279,7 +315,10 @@ let FasterJs = {
       }
     });
   },
+  
   init() {
+    document.querySelector('html').style.scrollBehavior = 'smooth';
+
     if (document.querySelectorAll('[data-faster-app]').length === 0) {
       document.body.innerHTML = "Error: open console tool to review it.";
       console.log("Error: no ([data-faster-app]) element detected in <body>.");
@@ -309,33 +348,10 @@ let FasterJs = {
         goTo: this.router.goTo,
       },
       view: this.view,
-    },
-    FasterLinks = document.querySelectorAll('[data-faster-link]');
+    };
 
-    //
-
-    FasterLinks.forEach(link => {
-      if (this.config.mode === 'history') {
-        let href = window.location.origin + (this.config.basePathName + link.getAttribute('href')).replace('//', '/');
-        if (link.tagName.toLowerCase() === 'a') {
-          link.setAttribute('href', href);
-        }
-        link.addEventListener('click', event => {
-          event.preventDefault();
-          this.router.goTo(link.getAttribute('data-faster-link'));
-        });
-      }
-      else {
-        if (link.tagName.toLowerCase() === 'a') {
-          link.setAttribute('href', ('#!/' + link.getAttribute('href')).replace('//', '/'));
-        }
-      }
-      //
-      link.addEventListener('click', event => {
-        if (this.config.mode === 'history') { event.preventDefault(); }
-        this.router.goTo(link.getAttribute('data-faster-link'));
-      });
-    });
+    // attach link event to all [data-faster-link]
+    this.tools.refreshLinks();
 
     if (this.config.mode === 'history') {
       if (window.location.hash !== '') {
@@ -357,8 +373,6 @@ let FasterJs = {
     }
 
     //
-
-    document.querySelector('html').style.scrollBehavior = 'smooth';
 
     // triggering events if they'd defined by user
     if (this.events.beforeInit) { this.events.beforeInit(FasterCore); }
