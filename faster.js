@@ -198,13 +198,6 @@ let FasterJs = {
           view: $this.view,
         };
 
-      // each time routing, let's hide all direct children items with [data-faster-*] of [data-faster-app]
-      [...document.querySelectorAll('[data-faster-component], [data-faster-fallback], [data-faster-event]')]
-      .forEach(e => {
-        if (!$this.config.componentsTransitions) { e.style.display = 'none'; }
-        else { e.style.visibility = 'hidden'; }
-      });
-
       // hide loadingLayer if the config.loadingLayer is set to false
       if (loadingLayer) {
         if (!$this.config.loadingLayer) {
@@ -307,11 +300,12 @@ let FasterJs = {
       all = [...components, ...fallbacks];
     //
     all.forEach(component => {
-      if (
-        component.getAttribute('data-faster-component-id') === selector
-        ||
-        component.getAttribute('data-faster-fallback-type') === selector
-      ) {
+      let componentsArray = [
+        component.getAttribute('data-faster-component-id'),
+        component.getAttribute('data-faster-fallback-type'),
+      ];
+      //
+      if (componentsArray.includes(selector)) {
         if (!$this.config.componentsTransitions) { component.style.display = 'block'; }
         else { component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
