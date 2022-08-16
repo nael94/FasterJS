@@ -7,39 +7,41 @@ let FasterJs = {
     loadingLayer: false,
   },
   tools: {
-    refreshLinks() {
-      let
-        $this = FasterJs,
-        fasterLinks = document.querySelectorAll('[data-faster-link]');
-      //
-      fasterLinks.forEach(link => {
-        // this to clone the link and recreate it without having any events
-        let l = link.cloneNode(true);
-        link.parentNode.replaceChild(l, link);
-        
+    core: {
+      refreshLinks() {
+        let
+          $this = FasterJs,
+          fasterLinks = document.querySelectorAll('[data-faster-link]');
         //
-  
-        if ($this.config.mode === 'history') {
-          let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
-          if (l.tagName.toLowerCase() === 'a') {
-            l.setAttribute('href', href);
+        fasterLinks.forEach(link => {
+          // this to clone the link and recreate it without having any events
+          let l = link.cloneNode(true);
+          link.parentNode.replaceChild(l, link);
+          
+          //
+    
+          if ($this.config.mode === 'history') {
+            let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
+            if (l.tagName.toLowerCase() === 'a') {
+              l.setAttribute('href', href);
+            }
+            l.addEventListener('click', event => {
+              event.preventDefault();
+              $this.router.goTo(l.getAttribute('data-faster-link'));
+            });
           }
+          else {
+            if (l.tagName.toLowerCase() === 'a') {
+              l.setAttribute('href', ('#!/' + l.getAttribute('href')).replace('//', '/'));
+            }
+          }
+          //
           l.addEventListener('click', event => {
-            event.preventDefault();
+            if ($this.config.mode === 'history') { event.preventDefault(); }
             $this.router.goTo(l.getAttribute('data-faster-link'));
           });
-        }
-        else {
-          if (l.tagName.toLowerCase() === 'a') {
-            l.setAttribute('href', ('#!/' + l.getAttribute('href')).replace('//', '/'));
-          }
-        }
-        //
-        l.addEventListener('click', event => {
-          if ($this.config.mode === 'history') { event.preventDefault(); }
-          $this.router.goTo(l.getAttribute('data-faster-link'));
         });
-      });
+      },
     },
   },
   router: {
@@ -353,7 +355,7 @@ let FasterJs = {
     };
 
     // attach link event to all [data-faster-link]
-    this.tools.refreshLinks();
+    this.tools.core.refreshLinks();
 
     if (this.config.mode === 'history') {
       if (window.location.hash !== '') {
