@@ -170,6 +170,7 @@ let FasterJs = {
           fallback: error,
           goTo: this.goTo,
         },
+        tools: this.tools,
       };
       //
       if (this.fallbacks[error]) { this.fallbacks[error](FasterCore); }
@@ -197,6 +198,7 @@ let FasterJs = {
             currentRoute: this.currentRoute(),
             goTo: this.goTo,
           },
+          tools: $this.tools,
           view: $this.view,
         };
 
@@ -351,6 +353,7 @@ let FasterJs = {
         currentRoute: this.router.currentRoute(),
         goTo: this.router.goTo,
       },
+      tools: this.tools,
       view: this.view,
     };
 
