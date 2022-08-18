@@ -18,8 +18,6 @@ let FasterJs = {
           let l = link.cloneNode(true);
           link.parentNode.replaceChild(l, link);
           
-          //
-    
           if ($this.config.mode === 'history') {
             let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
             if (l.tagName.toLowerCase() === 'a') {
@@ -41,6 +39,56 @@ let FasterJs = {
             $this.router.goTo(l.getAttribute('data-faster-link'));
           });
         });
+      },
+      generateLinks() {
+        let
+          $this = FasterJs,
+          fasterLinks = document.querySelectorAll('[data-faster-link]');
+        //
+        fasterLinks.forEach(link => {
+          if (!link.getAttribute('data-faster-link').includes('/')) {
+            // this is named route and it may has data-faster-link-* params to be processed
+            let paramsArr = link.getAttributeNames().filter(attr => attr.includes('data-faster-link'));
+            if (paramsArr.length === 1) {
+              // === 1 => means that the passed value is only [data-faster-link] named route without params
+              // so, the value will be replaced with the path key using refreshLinks(), nothing here to do
+            }
+            else {
+              let
+                routePath = $this.router.routes.filter(r => r.name === link.getAttribute('data-faster-link'))[0].path,
+                paramsObj = {}; // to collect all parameters to be processed multiply at once
+              // > 1 => means that there's a parameters passed with the named-route value, so, let's process it.
+              // but let's firstly remove the [data-faster-link] itself, we don't need it here
+              paramsArr = paramsArr.filter((param) => param !== 'data-faster-link'); // catching all parameters
+              paramsArr.forEach(param => {
+                let
+                  paramKey = param.replace('data-faster-link-', ''),
+                  paramVal = link.getAttribute(`data-faster-link-${paramKey}`);
+                //
+                if (paramKey !== 'params') {
+                  // it's just a single value to be processed
+                  paramsObj[paramKey] = paramVal;
+                }
+                else {
+                  // it's a key-value parameters pair object to be processed
+                  paramsObj = Object.assign({}, JSON.parse(paramVal), paramsObj);
+                }
+                // remove the paramKey from the link tag
+                link.removeAttribute(`data-faster-link-${paramKey}`);
+              });
+              for (let pk in paramsObj) {
+                routePath = routePath.replace(`:${pk}`, paramsObj[pk]);
+              }
+              // after processing the dynamic route with all parameters passed as data-faster-link-* attributes,
+              // let's reset the data-faster-link with the final processed path value
+              link.setAttribute('data-faster-link', routePath);
+            }
+          }
+        }); 
+      },
+      refresh() {
+        this.generateLinks();
+        this.refreshLinks();
       },
     },
   },
@@ -93,7 +141,10 @@ let FasterJs = {
           }
         });
         if (routeToGo) {
-          $this.router.goTo(routeToGo);
+          for (let paramKey in params) {
+            routeToGo = routeToGo.replace(`:${paramKey}`, params[paramKey]);
+          }
+          $this.router.goTo(routeToGo, params);
         }
         else {
           $this.router.throwError('routeNameNotFound');
@@ -357,8 +408,8 @@ let FasterJs = {
       view: this.view,
     };
 
-    // attach link event to all [data-faster-link]
-    this.tools.core.refreshLinks();
+    // calling refresh() to init basic tasks of the core
+    this.tools.core.refresh();
 
     if (this.config.mode === 'history') {
       if (window.location.hash !== '') {
@@ -394,8 +445,6 @@ let FasterJs = {
         }, 1);
       }
     };
-
-    //
 
     //handling ononline and onoffline events
     window.addEventListener('online', e => {
