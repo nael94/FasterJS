@@ -82,9 +82,13 @@ let FasterJs = {
               // after processing the dynamic route with all parameters passed as data-faster-link-* attributes,
               // let's reset the data-faster-link with the final processed path value
               link.setAttribute('data-faster-link', routePath);
+              if (link.tagName.toLowerCase() === 'a') {
+                // if the link tag is <a>, set its href to routePath
+                link.setAttribute('href', routePath);
+              }
             }
           }
-        }); 
+        });
       },
       refresh() {
         this.generateLinks();
