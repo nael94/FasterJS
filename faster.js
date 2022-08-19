@@ -30,7 +30,7 @@ let FasterJs = {
           }
           else {
             if (l.tagName.toLowerCase() === 'a') {
-              l.setAttribute('href', ('#!/' + l.getAttribute('href')).replace('//', '/'));
+              l.setAttribute('href', ('#!/' + (l.getAttribute('href')).replace('#!', '')).replace('//', '/'));
             }
           }
           //
