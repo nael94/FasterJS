@@ -95,6 +95,34 @@ let FasterJs = {
         this.refreshLinks();
       },
     },
+    dom: {
+      append(parent, child, multipleParents = false, triggerCoreRefresh = false) {
+        let $this = FasterJs;
+        //
+        if (multipleParents) {
+          document.querySelectorAll(parent).forEach(el => {
+            el.insertAdjacentHTML('beforeend', child);
+          });
+        }
+        else {
+          document.querySelector(parent).insertAdjacentHTML('beforeend', child);
+        }
+        if (triggerCoreRefresh) { $this.tools.core.refresh(); }
+      },
+      prepend(parent, child, multipleParents = false, triggerCoreRefresh = false) {
+        let $this = FasterJs;
+        //
+        if (multipleParents) {
+          document.querySelectorAll(parent).forEach(el => {
+            el.insertAdjacentHTML('afterbegin', child);
+          });
+        }
+        else {
+          document.querySelector(parent).insertAdjacentHTML('afterbegin', child);
+        }
+        if (triggerCoreRefresh) { $this.tools.core.refresh(); }
+      },
+    },
   },
   router: {
     baseRoute: '/',
