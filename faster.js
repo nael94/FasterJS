@@ -23,10 +23,6 @@ let FasterJs = {
             if (l.tagName.toLowerCase() === 'a') {
               l.setAttribute('href', href);
             }
-            l.addEventListener('click', event => {
-              event.preventDefault();
-              $this.router.goTo(l.getAttribute('data-faster-link'));
-            });
           }
           else {
             if (l.tagName.toLowerCase() === 'a') {
@@ -155,6 +151,7 @@ let FasterJs = {
         if ($this.config.mode === 'history') {
           let passedRoute = window.location.origin + ($this.config.basePathName + routeName).replace('//', '/');
           history.pushState({route: routeName, params: params}, '', passedRoute);
+          this.init(); // firing router.init() has to be fired
         }
         else {
           window.location.hash = `#!/${routeName}`.replace('//', '/');
@@ -404,7 +401,6 @@ let FasterJs = {
       }
     });
   },
-  
   init() {
     document.querySelector('html').style.scrollBehavior = 'smooth';
 
@@ -460,6 +456,12 @@ let FasterJs = {
       window.onhashchange = () => {
         this.router.init();
       };
+
+      if (location.origin + location.pathname !== location.origin + this.config.basePathName) {
+        // current full path does not match with basePathName
+        // we've to redirect to basePathName
+        location.href = location.origin + this.config.basePathName + location.hash;
+      }
     }
 
     //
