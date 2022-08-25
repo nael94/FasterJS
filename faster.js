@@ -5,6 +5,8 @@ let FasterJs = {
     modes: ['hash', 'history'],
     componentsTransitions: false,
     loadingLayer: false,
+    title: null,
+    titleSeparator: ' :: ',
   },
   tools: {
     core: {
@@ -105,6 +107,10 @@ let FasterJs = {
           el.insertAdjacentHTML('afterbegin', child);
         });
         if (triggerCoreRefresh) { $this.tools.core.refresh(); }
+      },
+      setPageTitle(title, keepSeparator = true) {
+        let $this = FasterJs;
+        document.title = title + (keepSeparator ? `${$this.config.titleSeparator}${$this.config.title}` : '');
       },
     },
   },
