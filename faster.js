@@ -108,6 +108,20 @@ let FasterJs = {
         });
         if (triggerCoreRefresh) { $this.tools.core.refresh(); }
       },
+      before(parent, child, triggerCoreRefresh = false) {
+        let $this = FasterJs;
+        document.querySelectorAll(parent).forEach(el => {
+          el.insertAdjacentHTML('beforebegin', child);
+        });
+        if (triggerCoreRefresh) { $this.tools.core.refresh(); }
+      },
+      after(parent, child, triggerCoreRefresh = false) {
+        let $this = FasterJs;
+        document.querySelectorAll(parent).forEach(el => {
+          el.insertAdjacentHTML('afterend', child);
+        });
+        if (triggerCoreRefresh) { $this.tools.core.refresh(); }
+      },
       setPageTitle(title, keepSeparator = true) {
         let $this = FasterJs;
         document.title = title + (keepSeparator ? `${$this.config.titleSeparator}${$this.config.title}` : '');
@@ -117,7 +131,7 @@ let FasterJs = {
   router: {
     baseRoute: '/',
     routes: [
-      // { name: 'index', path: '/', view: 'index', on: null, before: null, after: null, },
+      // { name: 'index', path: '/', view: 'index', on: null, before: null, after: null, module: null, },
     ],
     fallbacks: {
       noRoutes: null,
@@ -185,48 +199,41 @@ let FasterJs = {
        *   on(FasterCore) {},
        *   before(FasterCore) {},
        *   after(FasterCore) {},
+       *   module: null,
        * }
        */
+      // wrote this function to avoid duplication below
+      let routeObj = r => {
+        return {
+          name    : r.name,
+          path    : r.path,
+          view    : r.view ? r.view : null,
+          on      : r.on ? r.on : null,
+          before  : r.before ? r.before : null,
+          after   : r.after ? r.after : null,
+          module  : r.module ? r.module : null,
+        };
+      };
+
       if (this.routes.length > 0) {
-        this.routes.forEach(($route, j) => {
-          routes.forEach((route, i) => {
+        routes.forEach((route, i) => {
+          this.routes.forEach(($route, j) => {
             if (route.name === $route.name) {
               /**
                * Passed route name are duplicated.
                * So, let's overwrite the passed route with stored route with same key
                */
-               this.routes[j] = {
-                name    : route.name,
-                path    : route.path,
-                view    : route.view ? route.view : null,
-                on      : route.on ? route.on : null,
-                before  : route.before ? route.before : null,
-                after   : route.after ? route.after : null,
-              };
+               this.routes[j] = routeObj(route);
             }
             else {
-              this.routes.push({
-                name    : route.name,
-                path    : route.path,
-                view    : route.view ? route.view : null,
-                on      : route.on ? route.on : null,
-                before  : route.before ? route.before : null,
-                after   : route.after ? route.after : null,
-              });
+              this.routes.push(routeObj(route));
             }
           });
         });
       }
       else {
         routes.forEach((route, i) => {
-          this.routes.push({
-            name    : route.name,
-            path    : route.path,
-            view    : route.view ? route.view : null,
-            on      : route.on ? route.on : null,
-            before  : route.before ? route.before : null,
-            after   : route.after ? route.after : null,
-          });
+          this.routes.push(routeObj(route));
         });
       }
     },
@@ -236,7 +243,7 @@ let FasterJs = {
       let FasterCore = {
         config: {
           mode: $this.config.mode,
-          el: document.querySelector('[data-faster-app]'),
+          el: $this.tools.dom.el,
         },
         router: {
           baseRoute: this.baseRoute,
@@ -264,7 +271,7 @@ let FasterJs = {
         FasterCore = {
           config: {
             mode: $this.config.mode,
-            el: document.querySelector('[data-faster-app]'),
+            el: $this.tools.dom.el,
           },
           route: {},
           router: {
@@ -353,6 +360,62 @@ let FasterJs = {
       if (errorToThrow) { this.throwError(errorToThrow); }
       else {
         if (routeToExecute.before) { routeToExecute.before(FasterCore); }
+        if (routeToExecute.module) {
+          let
+            module = routeToExecute.module({ parameters: FasterCore.route.params }),
+            route = FasterCore.router.currentRoute,
+            selector = `[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"][data-faster-component-route="${route}"]`;
+            // console.log(module);return;
+          //
+          if (module.beforeMount) {
+            // created this now-defined property and injected it into FasterCore
+            // to be ready on-demand in the module object file
+            // this could be useful if the developer wants to kill the module processing in beforeMount() hook
+            // for any logical reason or permission 
+            FasterCore.tools.core.kill = false; // default value is false => keep going
+            module.beforeMount(FasterCore);
+          }
+          if (FasterCore.tools.core.kill !== true) {
+            // checking if the module section is not exist before ...
+            if (!document.querySelector(selector)) {
+              // the module section is not injected before, so let's do that
+              // injecting template into user dom
+              FasterCore.tools.dom.append('[data-faster-app]', `
+                <section
+                  data-faster-component
+                  data-faster-component-id="${module.name}"
+                  data-faster-component-route="${route}"
+                >${module.template}</section>
+              `, true);
+            }
+            else {
+              if (module.keepAlive === false) {
+                // not kept-alive module <=> it means that we have to re-inject the template
+                // in each time that the user goes to this route
+                document.querySelector(selector).innerHTML = module.template;
+                FasterCore.tools.core.refresh();
+              }
+            }
+            //
+            document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
+            .forEach(ref => {
+              // let's detect all properties that starts with @
+              ref.getAttributeNames().forEach(attr => {
+                if (attr.startsWith('@')) {
+                  // this is event
+                  let evFunc = module.methods[ref.getAttribute(attr)];
+                  attr = attr.replace('@', '');
+                  ref.addEventListener(attr, evFunc.bind(null, FasterCore), false);
+                  ref.removeAttribute(`@${attr}`);
+                }
+              });
+            });
+            //
+            FasterCore.view(module.name, route); // show this module section after checking/injecting it
+          }
+          // invoking all methods into module template
+          if (module.mounted) { module.mounted(FasterCore); }
+        }
         if (routeToExecute.view) { $this.view(routeToExecute.view); }
         if (routeToExecute.on) { routeToExecute.on(FasterCore); }
         if (routeToExecute.after) { routeToExecute.after(FasterCore); }
@@ -370,7 +433,7 @@ let FasterJs = {
     ononline: null,
     onoffline: null,
   },
-  view(selector) {
+  view(selector, route = null) {
     let
       $this = FasterJs,
       components = document.querySelectorAll(`[data-faster-app] [data-faster-component]`),
@@ -383,7 +446,10 @@ let FasterJs = {
         component.getAttribute('data-faster-fallback-type'),
       ];
       //
-      if (componentsArray.includes(selector)) {
+      if (
+        (!route && componentsArray.includes(selector)) ||
+        (route && component.getAttribute('data-faster-component-route') === route)
+      ) {
         if (!$this.config.componentsTransitions) { component.style.display = 'block'; }
         else { component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
@@ -396,18 +462,22 @@ let FasterJs = {
     });
   },
   init() {
+    this.tools.dom.el = document.querySelectorAll('[data-faster-app]');
     document.querySelector('html').style.scrollBehavior = 'smooth';
+    this.view('스크립팅'); // not exist component id to be shown => hide all components as easy as lazy :-P
 
-    if (document.querySelectorAll('[data-faster-app]').length === 0) {
+    if (this.tools.dom.el.length === 0) {
       document.body.innerHTML = "Error: open console tool to review it.";
       console.log("Error: no ([data-faster-app]) element detected in <body>.");
       return;
     }
-    else if (document.querySelectorAll('[data-faster-app]').length > 1) {
+    else if (this.tools.dom.el.length > 1) {
       document.body.innerHTML = "Error: open console tool to review it.";
       console.log("Error: more than one ([data-faster-app]) element detected in <body>. Only one element should be.");
       return;
     }
+
+    this.tools.dom.el = this.tools.dom.el[0];
 
     if (this.config.basePathName === null) {
       // no basePathName, this will lead to app failure.
@@ -419,7 +489,7 @@ let FasterJs = {
     let FasterCore = {
       config: {
         mode: this.config.mode,
-        el: document.querySelector('[data-faster-app]'),
+        el: this.tools.dom.el,
       },
       router: {
         baseRoute: this.router.baseRoute,
