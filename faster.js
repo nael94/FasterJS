@@ -389,7 +389,7 @@ let FasterJs = {
               `, true);
             }
             else {
-              if (module.keepAlive === false) {
+              if (module.keepAlive !== true) {
                 // not kept-alive module <=> it means that we have to re-inject the template
                 // in each time that the user goes to this route
                 document.querySelector(selector).innerHTML = module.template;
