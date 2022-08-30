@@ -385,18 +385,11 @@ let FasterJs = {
                   data-faster-component
                   data-faster-component-id="${module.name}"
                   data-faster-component-route="${route}"
+                  data-faster-component-keep-alive="${module.keepAlive === true}"
                 >${module.template}</section>
               `, true);
             }
-            else {
-              if (module.keepAlive !== true) {
-                // not kept-alive module <=> it means that we have to re-inject the template
-                // in each time that the user goes to this route
-                document.querySelector(selector).innerHTML = module.template;
-                FasterCore.tools.core.refresh();
-              }
-            }
-            //
+
             document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
             .forEach(ref => {
               // let's detect all properties that starts with @
@@ -410,7 +403,7 @@ let FasterJs = {
                 }
               });
             });
-            //
+
             FasterCore.view(module.name, route); // show this module section after checking/injecting it
           }
           // invoking all methods into module template
@@ -448,13 +441,16 @@ let FasterJs = {
       //
       if (
         (!route && componentsArray.includes(selector)) ||
-        (route && component.getAttribute('data-faster-component-route') === route)
+        (componentsArray.includes(selector) && route && component.getAttribute('data-faster-component-route') === route)
       ) {
         if (!$this.config.componentsTransitions) { component.style.display = 'block'; }
         else { component.style.visibility = 'visible'; }
         component.setAttribute('data-faster-component-activity', 'active');
       }
       else {
+        if (component.getAttribute('data-faster-component-route') !== null && component.getAttribute('data-faster-component-keep-alive') === 'false') {
+          component.remove();
+        }
         if (!$this.config.componentsTransitions) { component.style.display = 'none'; }
         else { component.style.visibility = 'hidden'; }
         component.setAttribute('data-faster-component-activity', '');
