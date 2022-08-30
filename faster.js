@@ -4,7 +4,6 @@ let FasterJs = {
     mode: 'hash',
     modes: ['hash', 'history'],
     componentsTransitions: false,
-    loadingLayer: false,
     title: null,
     titleSeparator: ' :: ',
   },
@@ -265,7 +264,6 @@ let FasterJs = {
     init() {
       let
         $this = FasterJs,
-        loadingLayer = document.querySelector('[data-faster-app] > [data-faster-loading]'),
         errorToThrow = 'routeNotRegistered', // default error to throw
         routeToExecute = {},
         FasterCore = {
@@ -282,13 +280,6 @@ let FasterJs = {
           tools: $this.tools,
           view: $this.view,
         };
-
-      // hide loadingLayer if the config.loadingLayer is set to false
-      if (loadingLayer) {
-        if (!$this.config.loadingLayer) {
-          loadingLayer.style.display = 'none';
-        }
-      }
 
       // bootstrapping the router core
       // but before, let's fire the routeBeforeEnter global event, passing FasterCore object
@@ -533,7 +524,7 @@ let FasterJs = {
       if (this.events.init) { this.events.init(FasterCore); }
       this.router.init();
       if (this.events.loaded) { this.events.loaded(FasterCore); }
-      if (this.config.loadingLayer) {
+      if (document.querySelector('[data-faster-loading]')) {
         setTimeout(() => {
           document.querySelector('[data-faster-loading]').classList.add('loaded');
         }, 1);
