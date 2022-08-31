@@ -13,28 +13,34 @@ let FasterJs = {
         let
           $this = FasterJs,
           fasterLinks = document.querySelectorAll('[data-faster-link]');
-        //
+
         fasterLinks.forEach(link => {
-          // this to clone the link and recreate it without having any events
-          let l = link.cloneNode(true);
-          link.parentNode.replaceChild(l, link);
-          
-          if ($this.config.mode === 'history') {
-            let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
-            if (l.tagName.toLowerCase() === 'a') {
-              l.setAttribute('href', href);
+          if (!link.hasAttribute('data-faster-link-refresh-excluded') || link.getAttribute('data-faster-link-refresh-excluded') !== "true") {
+            // this to clone the link and recreate it without having any events
+            let l = link.cloneNode(true);
+            link.parentNode.replaceChild(l, link);
+            
+            if ($this.config.mode === 'history') {
+              let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
+              if (l.tagName.toLowerCase() === 'a') {
+                l.setAttribute('href', href);
+              }
+            }
+            else {
+              if (l.tagName.toLowerCase() === 'a') {
+                l.setAttribute('href', ('#!/' + (l.getAttribute('href')).replace('#!', '')).replace('//', '/'));
+              }
+            }
+  
+            l.addEventListener('click', event => {
+              if ($this.config.mode === 'history') { event.preventDefault(); }
+              $this.router.goTo(l.getAttribute('data-faster-link'));
+            });
+
+            if (l.hasAttribute('data-faster-link-refresh-excluded')) {
+              l.setAttribute('data-faster-link-refresh-excluded', true);
             }
           }
-          else {
-            if (l.tagName.toLowerCase() === 'a') {
-              l.setAttribute('href', ('#!/' + (l.getAttribute('href')).replace('#!', '')).replace('//', '/'));
-            }
-          }
-          //
-          l.addEventListener('click', event => {
-            if ($this.config.mode === 'history') { event.preventDefault(); }
-            $this.router.goTo(l.getAttribute('data-faster-link'));
-          });
         });
       },
       generateLinks() {
@@ -62,23 +68,27 @@ let FasterJs = {
                   paramKey = param.replace('data-faster-link-', ''),
                   paramVal = link.getAttribute(`data-faster-link-${paramKey}`);
                 //
-                if (paramKey !== 'params') {
-                  // it's just a single value to be processed
-                  paramsObj[paramKey] = paramVal;
+                if (!['refresh-excluded'].includes(paramKey)) {
+                  // reserved core key, not to be handled as a user-passed parameter
+                  if (paramKey !== 'params') {
+                    // it's just a single value to be processed
+                    paramsObj[paramKey] = paramVal;
+                  }
+                  else {
+                    // it's a key-value parameters pair object to be processed
+                    paramsObj = Object.assign({}, JSON.parse(paramVal), paramsObj);
+                  }
+                  // remove the paramKey from the link tag
+                  link.removeAttribute(`data-faster-link-${paramKey}`);
                 }
-                else {
-                  // it's a key-value parameters pair object to be processed
-                  paramsObj = Object.assign({}, JSON.parse(paramVal), paramsObj);
-                }
-                // remove the paramKey from the link tag
-                link.removeAttribute(`data-faster-link-${paramKey}`);
               });
               for (let pk in paramsObj) {
                 routePath = routePath.replace(`:${pk}`, paramsObj[pk]);
               }
               // after processing the dynamic route with all parameters passed as data-faster-link-* attributes,
-              // let's reset the data-faster-link with the final processed path value
-              link.setAttribute('data-faster-link', routePath);
+              // let's inject the parsed final processed path link in [data-faster-link-parsed]
+              // keeping [data-faster-link] value is the name of this route
+              link.setAttribute('data-faster-link-parsed', routePath);
               if (link.tagName.toLowerCase() === 'a') {
                 // if the link tag is <a>, set its href to routePath
                 link.setAttribute('href', routePath);
