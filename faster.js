@@ -446,15 +446,36 @@ let FasterJs = {
       ) {
         if (!$this.config.componentsTransitions) { component.style.display = 'block'; }
         else { component.style.visibility = 'visible'; }
-        component.setAttribute('data-faster-component-activity', 'active');
+        setTimeout(() => {
+          component.setAttribute('data-faster-component-activity', 'active');
+        }, 1);
       }
       else {
-        if (component.getAttribute('data-faster-component-route') !== null && component.getAttribute('data-faster-component-keep-alive') === 'false') {
-          component.remove();
+        let sectionNotKeptAlive = component.getAttribute('data-faster-component-route') !== null && component.getAttribute('data-faster-component-keep-alive') === 'false';
+
+        if (!$this.config.componentsTransitions) {
+          if (sectionNotKeptAlive) {
+            component.remove();
+          }
+          else {
+            component.style.display = 'none';
+          }
         }
-        if (!$this.config.componentsTransitions) { component.style.display = 'none'; }
-        else { component.style.visibility = 'hidden'; }
-        component.setAttribute('data-faster-component-activity', '');
+        else {
+          if (sectionNotKeptAlive) {
+            document.querySelectorAll("[data-faster-component]").forEach(el => {
+              el.addEventListener('transitionend', e => {
+                component.remove();
+              });
+            });
+          }
+          else {
+            component.style.visibility = 'hidden';
+          }
+        }
+        setTimeout(() => {
+          component.setAttribute('data-faster-component-activity', '');
+        }, 1);
       }
     });
   },
