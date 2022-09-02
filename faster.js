@@ -381,7 +381,9 @@ let FasterJs = {
             if (!document.querySelector(selector)) {
               // the module section is not injected before, so let's do that
               // injecting template into user dom
-              FasterCore.tools.dom.append('[data-faster-app]', `
+              if (!document.querySelector('.clearfix')) {
+                // no .clearfix exist in the [data-faster-app]
+                FasterCore.tools.dom.append('[data-faster-app]', `
                 <section
                   data-faster-component
                   data-faster-component-id="${module.name}"
@@ -389,6 +391,18 @@ let FasterJs = {
                   data-faster-component-keep-alive="${module.keepAlive === true}"
                 >${module.template}</section>
               `, true);
+              }
+              else {
+                // .clearfix detected so inject BEFORE it
+                FasterCore.tools.dom.before('[data-faster-app] .clearfix', `
+                <section
+                  data-faster-component
+                  data-faster-component-id="${module.name}"
+                  data-faster-component-route="${route}"
+                  data-faster-component-keep-alive="${module.keepAlive === true}"
+                >${module.template}</section>
+              `, true);
+              }
             }
 
             document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
