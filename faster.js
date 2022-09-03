@@ -385,7 +385,7 @@ let FasterJs = {
             // this could be useful if the developer wants to kill the module processing in beforeMount() hook
             // for any logical reason or permission 
             FasterCore.tools.core.kill = false; // default value is false => keep going
-            module.beforeMount(FasterCore);
+            setTimeout(() => module.beforeMount(FasterCore), 3);
           }
           if (FasterCore.tools.core.kill !== true) {
             // checking if the module section is not exist before ...
@@ -414,7 +414,7 @@ let FasterJs = {
                 >${module.template}</section>
               `, true);
               }
-              if (module.created) { module.created(FasterCore); }
+              if (module.created) { setTimeout(() => module.created(FasterCore), 3); }
             }
 
             document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
@@ -434,7 +434,7 @@ let FasterJs = {
             FasterCore.view(module.name, route); // show this module section after checking/injecting it
           }
           // invoking all methods into module template
-          if (module.mounted) { module.mounted(FasterCore); }
+          if (module.mounted) { setTimeout(() => module.mounted(FasterCore), 3); }
         }
         if (routeToExecute.view) { $this.view(routeToExecute.view); }
         if (routeToExecute.on) { routeToExecute.on(FasterCore); }
