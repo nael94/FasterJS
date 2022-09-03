@@ -414,6 +414,7 @@ let FasterJs = {
                 >${module.template}</section>
               `, true);
               }
+              if (module.created) { module.created(FasterCore); }
             }
 
             document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
