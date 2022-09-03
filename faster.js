@@ -363,7 +363,7 @@ let FasterJs = {
         if (routeToExecute.before) { routeToExecute.before(FasterCore); }
         if (routeToExecute.module) {
           let
-            module = routeToExecute.module({ parameters: FasterCore.route.params }),
+            module = routeToExecute.module({ parameters: FasterCore.route.params ?? {} }),
             route = FasterCore.router.currentRoute,
             selector = `[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"][data-faster-component-route="${route}"]`;
             // console.log(module);return;
