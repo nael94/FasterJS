@@ -34,7 +34,7 @@ let FasterJs = {
   
             l.addEventListener('click', event => {
               if ($this.config.mode === 'history') { event.preventDefault(); }
-              $this.router.goTo(l.getAttribute('data-faster-link'));
+              $this.router.goTo(l.getAttribute('data-faster-link'), {}, l.getAttribute('data-faster-link-parsed'));
             });
 
             if (l.hasAttribute('data-faster-link-refresh-excluded')) {
@@ -159,7 +159,7 @@ let FasterJs = {
         return currentRoute !== '' ? ('/' + currentRoute.replace(/\/+$/, '')) : '/';
       }
     },
-    goTo(routeName, params = {}) {
+    goTo(routeName, params = {}, parsedLink = null) {
       let $this = FasterJs;
       //
       if (routeName.includes('/')) {
@@ -181,20 +181,26 @@ let FasterJs = {
           routes = $this.router.routes,
           routeToGo = null;
         //
-        routes.forEach((route, i) => {
-          if (route.name === routeName) {
-            routeToGo = route.path;
+        if (parsedLink === null) {
+          routes.forEach((route, i) => {
+            if (route.name === routeName) {
+              routeToGo = route.path;
+            }
+          });
+          if (routeToGo) {
+            for (let paramKey in params) {
+              routeToGo = routeToGo.replace(`:${paramKey}`, params[paramKey]);
+            }
+            $this.router.goTo(routeToGo, params);
           }
-        });
-        if (routeToGo) {
-          for (let paramKey in params) {
-            routeToGo = routeToGo.replace(`:${paramKey}`, params[paramKey]);
+          else {
+            $this.router.throwError('routeNameNotFound');
           }
-          $this.router.goTo(routeToGo, params);
         }
         else {
-          $this.router.throwError('routeNameNotFound');
+          $this.router.goTo(parsedLink);
         }
+
       }
     },
     register(routes) {
