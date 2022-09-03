@@ -21,7 +21,7 @@ let FasterJs = {
             link.parentNode.replaceChild(l, link);
             
             if ($this.config.mode === 'history') {
-              let href = window.location.origin + ($this.config.basePathName + l.getAttribute('href')).replace('//', '/');
+              let href = l.getAttribute('href');
               if (l.tagName.toLowerCase() === 'a') {
                 l.setAttribute('href', href);
               }
@@ -91,7 +91,12 @@ let FasterJs = {
               link.setAttribute('data-faster-link-parsed', routePath);
               if (link.tagName.toLowerCase() === 'a') {
                 // if the link tag is <a>, set its href to routePath
-                link.setAttribute('href', routePath);
+                if ($this.config.mode === 'hash') {
+                  link.setAttribute('href', `#!${routePath}`);
+                }
+                else {
+                  link.setAttribute('href', `${$this.config.basePathName}${routePath}`.replace('//', '/'));
+                }
               }
             }
           }
