@@ -57,45 +57,48 @@ let FasterJs = {
               // so, the value will be replaced with the path key using refreshLinks(), nothing here to do
             }
             else {
-              let
-                routePath = $this.router.routes.filter(r => r.name === link.getAttribute('data-faster-link'))[0].path,
-                paramsObj = {}; // to collect all parameters to be processed multiply at once
-              // > 1 => means that there's a parameters passed with the named-route value, so, let's process it.
-              // but let's firstly remove the [data-faster-link] itself, we don't need it here
-              paramsArr = paramsArr.filter((param) => param !== 'data-faster-link'); // catching all parameters
-              paramsArr.forEach(param => {
+              if (link.getAttribute('data-faster-link-parsed') === null) {
+                // link not generated yet
                 let
-                  paramKey = param.replace('data-faster-link-', ''),
-                  paramVal = link.getAttribute(`data-faster-link-${paramKey}`);
-                //
-                if (!['refresh-excluded', 'parsed'].includes(paramKey)) {
-                  // reserved core key, not to be handled as a user-passed parameter
-                  if (paramKey !== 'params') {
-                    // it's just a single value to be processed
-                    paramsObj[paramKey] = paramVal;
+                  routePath = $this.router.routes.filter(r => r.name === link.getAttribute('data-faster-link'))[0].path,
+                  paramsObj = {}; // to collect all parameters to be processed multiply at once
+                // > 1 => means that there's a parameters passed with the named-route value, so, let's process it.
+                // but let's firstly remove the [data-faster-link] itself, we don't need it here
+                paramsArr = paramsArr.filter((param) => param !== 'data-faster-link'); // catching all parameters
+                paramsArr.forEach(param => {
+                  let
+                    paramKey = param.replace('data-faster-link-', ''),
+                    paramVal = link.getAttribute(`data-faster-link-${paramKey}`);
+                  //
+                  if (!['refresh-excluded', 'parsed'].includes(paramKey)) {
+                    // reserved core key, not to be handled as a user-passed parameter
+                    if (paramKey !== 'params') {
+                      // it's just a single value to be processed
+                      paramsObj[paramKey] = paramVal;
+                    }
+                    else {
+                      // it's a key-value parameters pair object to be processed
+                      paramsObj = Object.assign({}, JSON.parse(paramVal), paramsObj);
+                    }
+                    // remove the paramKey from the link tag
+                    link.removeAttribute(`data-faster-link-${paramKey}`);
+                  }
+                });
+                for (let pk in paramsObj) {
+                  routePath = routePath.replace(`:${pk}`, paramsObj[pk]);
+                }
+                // after processing the dynamic route with all parameters passed as data-faster-link-* attributes,
+                // let's inject the parsed final processed path link in [data-faster-link-parsed]
+                // keeping [data-faster-link] value is the name of this route
+                link.setAttribute('data-faster-link-parsed', routePath);
+                if (link.tagName.toLowerCase() === 'a') {
+                  // if the link tag is <a>, set its href to routePath
+                  if ($this.config.mode === 'hash') {
+                    link.setAttribute('href', `#!${routePath}`);
                   }
                   else {
-                    // it's a key-value parameters pair object to be processed
-                    paramsObj = Object.assign({}, JSON.parse(paramVal), paramsObj);
+                    link.setAttribute('href', `${$this.config.basePathName}${routePath}`.replace('//', '/'));
                   }
-                  // remove the paramKey from the link tag
-                  link.removeAttribute(`data-faster-link-${paramKey}`);
-                }
-              });
-              for (let pk in paramsObj) {
-                routePath = routePath.replace(`:${pk}`, paramsObj[pk]);
-              }
-              // after processing the dynamic route with all parameters passed as data-faster-link-* attributes,
-              // let's inject the parsed final processed path link in [data-faster-link-parsed]
-              // keeping [data-faster-link] value is the name of this route
-              link.setAttribute('data-faster-link-parsed', routePath);
-              if (link.tagName.toLowerCase() === 'a') {
-                // if the link tag is <a>, set its href to routePath
-                if ($this.config.mode === 'hash') {
-                  link.setAttribute('href', `#!${routePath}`);
-                }
-                else {
-                  link.setAttribute('href', `${$this.config.basePathName}${routePath}`.replace('//', '/'));
                 }
               }
             }
@@ -385,7 +388,7 @@ let FasterJs = {
             // this could be useful if the developer wants to kill the module processing in beforeMount() hook
             // for any logical reason or permission 
             FasterCore.tools.core.kill = false; // default value is false => keep going
-            setTimeout(() => module.beforeMount(FasterCore), 10);
+            setTimeout(() => { module.beforeMount(FasterCore); }, 10);
           }
           if (FasterCore.tools.core.kill !== true) {
             // checking if the module section is not exist before ...
@@ -395,26 +398,26 @@ let FasterJs = {
               if (!document.querySelector('.clearfix')) {
                 // no .clearfix exist in the [data-faster-app]
                 FasterCore.tools.dom.append('[data-faster-app]', `
-                <section
-                  data-faster-component
-                  data-faster-component-id="${module.name}"
-                  data-faster-component-route="${route}"
-                  data-faster-component-keep-alive="${module.keepAlive === true}"
-                >${module.template}</section>
-              `, true);
+                  <section
+                    data-faster-component
+                    data-faster-component-id="${module.name}"
+                    data-faster-component-route="${route}"
+                    data-faster-component-keep-alive="${module.keepAlive === true}"
+                  >${module.template}</section>
+                `, true);
               }
               else {
                 // .clearfix detected so inject BEFORE it
                 FasterCore.tools.dom.before('[data-faster-app] .clearfix', `
-                <section
-                  data-faster-component
-                  data-faster-component-id="${module.name}"
-                  data-faster-component-route="${route}"
-                  data-faster-component-keep-alive="${module.keepAlive === true}"
-                >${module.template}</section>
-              `, true);
+                  <section
+                    data-faster-component
+                    data-faster-component-id="${module.name}"
+                    data-faster-component-route="${route}"
+                    data-faster-component-keep-alive="${module.keepAlive === true}"
+                  >${module.template}</section>
+                `, true);
               }
-              if (module.created) { setTimeout(() => module.created(FasterCore), 10); }
+              if (module.created) { setTimeout(() => { module.created(FasterCore); }, 10); }
             }
 
             document.querySelectorAll(`[data-faster-app] [data-faster-component][data-faster-component-id="${module.name}"] *`)
@@ -434,7 +437,7 @@ let FasterJs = {
             FasterCore.view(module.name, route); // show this module section after checking/injecting it
           }
           // invoking all methods into module template
-          if (module.mounted) { setTimeout(() => module.mounted(FasterCore), 10); }
+          if (module.mounted) { setTimeout(() => { module.mounted(FasterCore); }, 10); }
         }
         if (routeToExecute.view) { $this.view(routeToExecute.view); }
         if (routeToExecute.on) { routeToExecute.on(FasterCore); }
@@ -489,19 +492,23 @@ let FasterJs = {
         }
         else {
           if (sectionNotKeptAlive) {
-            document.querySelectorAll("[data-faster-component]").forEach(el => {
-              el.addEventListener('transitionend', e => {
+            component.ontransitionstart = e => {
+              FasterJs.tools.dom.el.setAttribute('data-faster-transition', 'ongoing');
+            };
+
+            component.ontransitionend = e => {
+              if (component.getAttribute(`data-faster-component-activity`) !== 'active') {
                 component.remove();
-              });
-            });
+              }
+              FasterJs.tools.dom.el.setAttribute('data-faster-transition', 'done');
+            };
           }
           else {
             component.style.visibility = 'hidden';
           }
         }
-        setTimeout(() => {
-          component.setAttribute('data-faster-component-activity', '');
-        }, 1);
+
+        component.setAttribute('data-faster-component-activity', '');
       }
     });
   },
