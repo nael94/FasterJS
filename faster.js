@@ -261,9 +261,9 @@ let FasterJs = {
       }
     },
     throwError(error) {
-      let $this = FasterJs;
-      //
-      let FasterCore = {
+      let
+        $this = FasterJs, 
+        FasterCore = {
         config: {
           mode: $this.config.mode,
           el: $this.tools.dom.el,
@@ -275,17 +275,22 @@ let FasterJs = {
           goTo: this.goTo,
         },
         tools: this.tools,
-      };
+      },
+      fb = this.fallbacks[error];
       //
-      if (this.fallbacks[error]) { this.fallbacks[error](FasterCore); }
+      if (fb && typeof fb === 'function') { fb(FasterCore); }
       else if (document.querySelector(`[data-faster-fallback][data-faster-fallback-type=${error}]`)) {
         // if [data-faster-fallback] is exist, call the specified related element.
         $this.view(error);
       }
+      else if (this.routes.filter(r => r.name === error).length > 0) {
+        this.init(this.routes.filter(r => r.name === error)[0]);
+        // console.log(this.routes.filter(r => r.name === error)[0]);
+      }
       else { console.log(`router fallback error: ${error}`); }
       return;
     },
-    init() {
+    init(_module = null) {
       let
         $this = FasterJs,
         errorToThrow = 'routeNotRegistered', // default error to throw
@@ -316,60 +321,66 @@ let FasterJs = {
         }
       }
 
-      if (this.routes.length > 0) {
-        let
-          normalRoutes  = this.routes.filter(route => !route.path.includes(':')),
-          dynamicRoutes = this.routes.filter(route => route.path.includes(':'));
-        //
-        for (let i in normalRoutes) {
-          if (normalRoutes[i].path === this.currentRoute()) {
-            errorToThrow = null; // just to deactivate error due to calling exist route
-            routeToExecute = normalRoutes[i];
-            FasterCore.route = { name: normalRoutes[i].name, path: normalRoutes[i].path, };
-            break;
-          }
-        }
-        if (errorToThrow) {
-          // still route is not found in normalRoutes
-          // maybe it's a dynamic route
-          let cRoute = this.currentRoute(), cRouteS = cRoute.split('/').slice(1);
+      if (_module === null) {
+        if (this.routes.length > 0) {
+          let
+            normalRoutes  = this.routes.filter(route => !route.path.includes(':')),
+            dynamicRoutes = this.routes.filter(route => route.path.includes(':'));
           //
-          for (let i in dynamicRoutes) {
-            let
-              routePath = dynamicRoutes[i].path,
-              regex = new RegExp(routePath.replace(/:[^\s/]+/g, '([\\w-]+)')),
-              segments = routePath.split('/').slice(1),
-              dynamicSegments = routePath.match(/:[^\s/]+/g),
-              routeMatched = cRoute.match(regex);
-            //
-            if (cRouteS.length === segments.length) {
-              // supposed to find suitable route
-              if (routeMatched) {
-                routeToExecute = dynamicRoutes[i];
-                //
-                let params = {}, dParams = [...routeMatched.slice(1)];
-                dynamicSegments.forEach((d, i) => {
-                  params[d.replace(':', '')] = dParams[i];
-                });
-                //
-                FasterCore.route = {
-                  name: routeToExecute.name,
-                  path: routeMatched[0],
-                  params: params,
-                };
-                break;
-              }
+          for (let i in normalRoutes) {
+            if (normalRoutes[i].path === this.currentRoute()) {
+              errorToThrow = null; // just to deactivate error due to calling exist route
+              routeToExecute = normalRoutes[i];
+              FasterCore.route = { name: normalRoutes[i].name, path: normalRoutes[i].path, };
+              break;
             }
           }
-          //
-          if (Object.keys(routeToExecute).length > 0) {
-            // dynamic route found
-            errorToThrow = null;
+          if (errorToThrow) {
+            // still route is not found in normalRoutes
+            // maybe it's a dynamic route
+            let cRoute = this.currentRoute(), cRouteS = cRoute.split('/').slice(1);
+            //
+            for (let i in dynamicRoutes) {
+              let
+                routePath = dynamicRoutes[i].path,
+                regex = new RegExp(routePath.replace(/:[^\s/]+/g, '([\\w-]+)')),
+                segments = routePath.split('/').slice(1),
+                dynamicSegments = routePath.match(/:[^\s/]+/g),
+                routeMatched = cRoute.match(regex);
+              //
+              if (cRouteS.length === segments.length) {
+                // supposed to find suitable route
+                if (routeMatched) {
+                  routeToExecute = dynamicRoutes[i];
+                  //
+                  let params = {}, dParams = [...routeMatched.slice(1)];
+                  dynamicSegments.forEach((d, i) => {
+                    params[d.replace(':', '')] = dParams[i];
+                  });
+                  //
+                  FasterCore.route = {
+                    name: routeToExecute.name,
+                    path: routeMatched[0],
+                    params: params,
+                  };
+                  break;
+                }
+              }
+            }
+            //
+            if (Object.keys(routeToExecute).length > 0) {
+              // dynamic route found
+              errorToThrow = null;
+            }
           }
+        }
+        else {
+          errorToThrow = 'noRoutes';
         }
       }
       else {
-        errorToThrow = 'noRoutes';
+        errorToThrow = null;
+        routeToExecute = _module;
       }
 
       if (errorToThrow) { this.throwError(errorToThrow); }
